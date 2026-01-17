@@ -119,6 +119,7 @@ alias composer2-php8.4-dev="docker run --rm --interactive --tty -e COMPOSER=comp
 alias composer2-php8.4-prod="docker run --rm --interactive --tty -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(pwd)"/../..,target=/monorepo,readonly     --mount type=bind,source="$(pwd)",target=/app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.4  composer2"
 
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+compdef config=git
 config config --local status.showUntrackedFiles no
 
 source ~/init-php-aliases.sh
@@ -135,6 +136,7 @@ export PATH=$PATH:$HOME/.yarn/bin:$HOME/.cargo/bin:$HOME/bin
 export PATH=$PATH:$HOME/.config/composer/vendor/bin
 export PATH=$PATH:/var/lib/flatpak/exports/bin
 export NODE_OPTIONS=--max_old_space_size=30000
+#apply color theme
 wal --vte -Rq
 EDITOR=ox
 source $HOME/.shell-keys/keys
