@@ -1,0 +1,17 @@
+#!/bin/sh
+
+#if ! pgrep xscreensaver >/dev/null 2>&1
+#then
+#    /usr/bin/xscreensaver -no-capture-stderr -no-splash &
+#fi
+
+#/usr/bin/xscreensaver-command -lock
+
+
+# Import the colors
+
+#. "${HOME}/.cache/wal/colors.sh"
+#i3lock -c "$color1" -i "${HOME}/.cache/wal/wallpaper.png"
+
+DIR=$(dirname $0)
+$HOME/.local/fabien/i3lock-multimonitor/lock

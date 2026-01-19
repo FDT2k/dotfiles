@@ -1,0 +1,13 @@
+#!/bin/zsh
+#  ____ _____
+
+ITEMS_PATH="/home/fabien/.local/fabien/rofi-items"
+OPTS=$(ls -1 $ITEMS_PATH/$1)
+
+STR="$2"
+
+echo $STR
+    
+choice=$(echo -e "$OPTS" | rofi -lines 5 -dmenu -p "$STR")
+
+PATH=$PATH:$ITEMS_PATH bash $ITEMS_PATH/$1/$choice
