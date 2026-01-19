@@ -122,6 +122,8 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 compdef config=git
 config config --local status.showUntrackedFiles no
 
+alias chromium-w='chromium --enable-features=UseOzonePlatform --ozone-platform=wayland'
+
 source ~/init-php-aliases.sh
 
 #alias gitsmtags="for i in $(git config --file .gitmodules --get-regexp path | awk '{ print $2 }'); do echo $i\":\"; git push --tags ; done"
