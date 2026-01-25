@@ -5,13 +5,10 @@
  * 
  * Colors
  **/
-
+@import "~/.cache/wal/colors-rofi-dark.rasi"
 * {
-    background:      transparent;
     background-alt: @background;
-    foreground:     @foreground;
-    selected:       @selected-normal-background;
+    faka-selected:       @selected-normal-background;
     active:         @selected-active-background;
     urgent:         @selected-urgent-background;
 }
-@import "~/.cache/wal/colors-rofi-dark.rasi"
