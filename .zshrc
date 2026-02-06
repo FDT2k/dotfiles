@@ -4,7 +4,7 @@ zmodload zsh/zprof
 export NVM_LAZY=1
 # Path to your oh-my-zsh installation.
 export ZSH="/home/fabien/.oh-my-zsh"
-
+export BROWSER=//usr/bin/google-chrome-stable
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -132,6 +132,7 @@ source ~/init-php-aliases.sh
 
 source /usr/share/nvm/init-nvm.sh
 
+alias x-www-browser='/usr/bin/google-chrome-stable'
 
 
 export PATH=$PATH:$HOME/.yarn/bin:$HOME/.cargo/bin:$HOME/bin

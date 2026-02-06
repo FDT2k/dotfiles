@@ -10,6 +10,21 @@ c2_82_dev () {
 c2_82_prod () {
 	docker run --rm --interactive --tty -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2 "$@"
 }
+c2_82() {
+	docker run --rm --interactive --tty -e COMPOSER=composer.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2 "$@"
+}
+
+c2_83_dev () {
+        docker run --rm --interactive --tty -e COMPOSER=composer.dev.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
+}
+
+c2_83_prod () {
+        docker run --rm --interactive --tty -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
+}
+c2_83() {
+        docker run --rm --interactive --tty -e COMPOSER=composer.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
+}
+
 
 alias c2-82="docker run --rm --interactive --tty -e COMPOSER=composer.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2"
 
