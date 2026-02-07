@@ -1,0 +1,43 @@
+#!/bin/bash
+
+PROJECT_PATH=${1:-/home/fabien/Documents/fastwork/kda-dev}
+
+
+DIRS=$(ls -1 $PROJECT_PATH)
+
+FOLDER=$(echo -e "$DIRS" | rofi -lines 5 -dmenu -p "$STR")
+
+echo $FOLDER
+if [ -z "$FOLDER" ]; then
+    echo "No folder picked"
+    exit 1;
+fi
+
+DIRS=$(ls -1 $PROJECT_PATH/$FOLDER)
+PROJECT=$(echo -e "$DIRS" | rofi -lines 5 -dmenu -p "$STR")
+echo $PROJECT
+
+if [ -z "$PROJECT" ]; then
+    echo "No project picked"
+    exit 1;
+fi
+
+FULL_PATH=$PROJECT_PATH/$FOLDER/$PROJECT
+echo $FULL_PATH
+
+qtile cmd-obj -o cmd -f eval -a "qtile.disable_mouse_focus()"
+
+qtile cmd-obj -o group -f setlayout -a bsp
+
+# Lancer vscode et l'agrandir
+code $FULL_PATH 
+sleep 1
+
+
+# Lancer terminator
+terminator --working-directory $FULL_PATH
+sleep 2
+qtile cmd-obj -o layout -f left
+qtile cmd-obj -o layout -f grow_right
+qtile cmd-obj -o layout -f grow_right
+qtile cmd-obj -o cmd -f eval -a "qtile.enable_mouse_focus()"
