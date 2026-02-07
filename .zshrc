@@ -139,6 +139,10 @@ export PATH=$PATH:$HOME/.yarn/bin:$HOME/.cargo/bin:$HOME/bin
 export PATH=$PATH:$HOME/.config/composer/vendor/bin
 export PATH=$PATH:/var/lib/flatpak/exports/bin
 export NODE_OPTIONS=--max_old_space_size=30000
+gu() {
+    gittyup "$(realpath "${1:-.}")" &
+}
+
 #apply color theme
 wal --vte -Rq
 EDITOR=ox
