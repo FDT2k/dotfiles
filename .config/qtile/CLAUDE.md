@@ -9,8 +9,6 @@ Linux desktop environment configuration system centered around **Qtile window ma
 ## Setup
 
 ```bash
-# Install dependencies
-bin/install-deps.sh
 
 # Symlink qtile_config package to Qtile config directory
 ln -sf $(pwd)/qtile_config ~/.config/qtile/qtile_config
@@ -103,7 +101,7 @@ Preset layouts in `bin/monitor_layout/`:
 
 ## Dependencies
 
-Core: qtile, python-rofi, rofi, xrandr, ImageMagick, xdotool, pamixer, pactl, pywal, terminator
+Core: qtile, rofi, xrandr, ImageMagick, xdotool, pamixer, pactl, pywal, terminator
 
 ## Keybinding Conventions
 
