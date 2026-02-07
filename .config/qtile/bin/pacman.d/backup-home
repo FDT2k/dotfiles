@@ -1,0 +1,3 @@
+CMD="rsync -r -t -v --progress --exclude-from=/home/fabien/yggdrasil-rsync-homes-exclude /home/fabien /srv/Backups/home/"
+
+floatterm "$CMD"

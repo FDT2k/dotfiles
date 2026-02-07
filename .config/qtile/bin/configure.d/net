@@ -1,0 +1,3 @@
+CMD="nmtui"
+
+floatterm "$CMD"

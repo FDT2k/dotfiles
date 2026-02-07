@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ xrandr | grep  " connected primary\|\*" | awk 'FNR==2{print $1}' | sed  's/x/ /g' | awk '{print $2}'

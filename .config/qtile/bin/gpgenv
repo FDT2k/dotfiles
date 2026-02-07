@@ -1,0 +1,15 @@
+#!/bin/bash
+
+GPGFILE=$1
+
+if [ ! -f "$GPGFILE" ]; then
+    echo "file not found $GPGFILE"
+    exit 1
+fi
+
+shift
+
+#gpg --lock-never -d $GPGFILE 2>/dev/null
+
+env $(gpg --lock-never -d $GPGFILE 2>/dev/null | sed 's/^#.*$//g') $@
+

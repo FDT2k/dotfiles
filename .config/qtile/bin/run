@@ -1,0 +1,2 @@
+#!/bin/zsh
+rofi -terminal terminator -show run -modi run,filebrowser,ssh,drun,window -show-icons -sidebar-mode  -ssh-command "{terminal}  -b  -e \"{ssh-client} {host}\""

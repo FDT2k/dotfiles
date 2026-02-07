@@ -1,0 +1,4 @@
+#!/bin/bash
+DIR=$(dirname $0)
+
+/home/fabien/Documents/fastwork/MacOS/kda-launch/windows-10.sh

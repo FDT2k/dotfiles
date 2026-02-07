@@ -1,0 +1,3 @@
+CMD="screen sudo pacman -Suy"
+
+floatterm "$CMD"

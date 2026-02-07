@@ -1,0 +1,3 @@
+CMD="rsync -r -t -v --progress -z -s /var/cache/pacman/pkg/* /srv/Backups/var/cache/pacman/pkg"
+
+floatterm "$CMD"

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+CMD="sudo pacman -Qtdq | sudo pacman -Rns -"
+floatterm "$CMD"

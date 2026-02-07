@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+DIR=$(dirname $0)
+
+wal --vte -R
+
+$DIR/colorize-dunst &
+$DIR/colorize-k70 &
+
+sleep 1
+
+
+notify-send "theme reloaded"

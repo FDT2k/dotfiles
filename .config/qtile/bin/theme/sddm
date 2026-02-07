@@ -1,0 +1,25 @@
+#!/bin/bash
+
+
+DIR=$(dirname $0)
+
+SDDM_THEME="/usr/share/sddm/themes/fdt2k-dark/theme.conf.user"
+IMAGE="/home/fabien/.cache/wal/current-theme.jpg"
+
+
+COLORS="/home/fabien/.cache/wal/colors"
+
+echo "[General]" > $SDDM_THEME
+echo "background=$IMAGE" >>$SDDM_THEME
+
+#take first line of the file
+BG_COLOR=$(head -n 1 $COLORS)
+echo "BackgroundColor=$BG_COLOR" >> $SDDM_THEME
+
+#take second line of the file
+FG_COLOR=$(head -n 8 $COLORS | tail -n 1)
+echo "MainColor=$FG_COLOR" >> $SDDM_THEME
+
+#take third line of the file
+AC_COLOR=$(head -n 3 $COLORS | tail -n 1)
+echo "AccentColor=$AC_COLOR" >> $SDDM_THEME

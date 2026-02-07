@@ -1,0 +1,3 @@
+CMD="sudo pacman -Sy"
+
+floatterm "$CMD"

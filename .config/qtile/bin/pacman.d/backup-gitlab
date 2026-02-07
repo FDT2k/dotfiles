@@ -1,0 +1,3 @@
+CMD="rsync -r -t -v --progress -z -s /home/fabien/Documents/fastwork/laravel-dev/sites/heimdall/storage/app/git_backups/* fabien@yggdrasil.lan:/volume1/NetBackup/Gitlab"
+
+floatterm "$CMD"

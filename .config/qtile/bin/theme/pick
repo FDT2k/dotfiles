@@ -1,0 +1,31 @@
+#!/bin/bash
+
+DIR=$(dirname $0)
+FOLDER="$HOME/Pictures/themes"
+OPTS=$(ls -l $FOLDER | awk 'NR>1 {print $NF}')
+
+STR="$1"
+
+
+
+
+choice=$(echo -e "$OPTS" | rofi -lines 10 -dmenu -p "Theme")
+
+convert $FOLDER/$choice   -scale 10% -scale 1000%  ~/.cache/wal/wallpaper.png
+
+#store choice for workspace 
+
+
+cp -a $FOLDER/$choice ~/.cache/wal/current-theme.jpg
+
+ln -s ~/.cache/wal/current-theme.jpg ~/.config/qtile/bin/i3lock-multimonitor/img/background.png
+
+rm  ~/.cache/wal/.theme-$STR.jpg
+ln -s  $FOLDER/$choice ~/.cache/wal/.theme-$STR.jpg
+
+wal -i $FOLDER/$choice
+
+qtile cmd-obj -o cmd -f restart
+
+. $DIR/reload
+. $DIR/sddm

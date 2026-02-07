@@ -1,0 +1,2 @@
+ssh fabien@fdtacer.lan killall -9 barrierc
+killall -9 barriers

@@ -1,0 +1,12 @@
+#!/bin/bash
+DIR=$(dirname $0)
+
+
+WSP=$1
+
+
+if [ -z $WSP ];
+    WSP="1"
+
+
+$DIR/reload 

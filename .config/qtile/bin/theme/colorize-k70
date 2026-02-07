@@ -1,0 +1,2 @@
+#!/bin/bash
+cat ~/.cache/wal/colors | sed -n 2p | sed -E 's/#/rgb /gm;t;d' > /tmp/ckbpipe000

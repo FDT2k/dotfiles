@@ -1,0 +1,3 @@
+barriers -c ~/.config/qtile/.conf/barrier.sgc --restart
+ssh fabien@fdtacer.lan DISPLAY=:1.0 /usr/bin/barrierc --restart   --name FDTACER 192.168.64.108:24800
+

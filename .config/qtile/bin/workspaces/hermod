@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+brave localhost:3001
+tmuxinator hermod
+:wq
+;

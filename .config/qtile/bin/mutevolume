@@ -1,0 +1,8 @@
+#!/bin/bash
+
+
+muted="muted"
+
+[[ "$(pamixer --get-mute)" == "true" ]] && muted="unmuted"
+
+pamixer -t && notify-send --hint=string:x-dunst-stack-tag:volume "volume ${muted}" 

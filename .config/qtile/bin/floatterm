@@ -1,0 +1,3 @@
+#!/bin/bash
+
+terminator -r "dialog" -p hold -l floating   -b  -e "$1"

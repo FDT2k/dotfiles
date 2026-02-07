@@ -1,0 +1,21 @@
+#!/bin/bash
+
+FILE=""
+DIR="~/.config/qtile/bin/workspaces/"
+echo $1 $2 $3 
+
+if [ "$1" = "new"  ]; then
+    FILE=$2
+    touch ~/.config/qtile/bin/workspaces/$FILE
+    chmod u+x ~/.config/qtile/bin/workspaces/$FILE
+    echo "created $FILE workspace "
+fi
+if [ "$1" = "add"  ]; then
+    FILE=$2
+    echo $DIR$FILE
+    if [ -f "$DIR$FILE" ]; then
+        echo "adding"
+    else 
+        echo "wp not exists"
+    fi
+fi

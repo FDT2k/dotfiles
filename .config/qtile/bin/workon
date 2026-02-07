@@ -1,0 +1,19 @@
+#!/bin/bash
+
+P=$1
+WD=~/Documents/work
+DIR=$(dirname $0)
+LDIR=$(pwd)
+#cd $WD/$P
+
+#atom .
+echo $LDIR
+echo $P
+#xterm -e "cd $WD/$P; zsh"
+
+if [ -z "$P" ]; then
+  echo "nodirgiven"
+fi
+
+atom .
+xterm -e "zsh; npx run test"
