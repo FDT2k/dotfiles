@@ -1,6 +1,7 @@
 # workspaces.py - Workspace and room management
 
-from libqtile.config import Group, ScratchPad, DropDown, Match
+from libqtile.config import Group, ScratchPad, DropDown, Match, Key
+from libqtile.lazy import lazy
 from libqtile import widget
 from libqtile.log_utils import logger
 
@@ -140,3 +141,21 @@ groups.append(ScratchPad(name='scratchpad', dropdowns=[
     DropDown('discord', 'com.discordapp.Discord',
              width=0.8, height=0.8, x=0.1, y=0.1, opacity=1, match=Match(wm_class='discord'), on_focus_lost_hide=False),
 ], single=True))
+
+# Workspace and room keybindings
+# Can be imported and extended to keys list, or omitted to disable the system
+workspace_keys = []
+
+# Workspace hotkeys (F1-F6)
+for workspace, hotkey in workspaces:
+    workspace_keys.append(Key([mod], hotkey, lazy.function(
+        to_workspace(workspace))))
+    workspace_keys.append(Key([mod, "shift"], hotkey, lazy.function(
+        window_to_workspace(workspace))))
+
+# Room hotkeys (a, s, d, y, x, c)
+for room in rooms:
+    workspace_keys.append(Key([mod], room, lazy.function(
+        to_room(room))))
+    workspace_keys.append(Key([mod, "shift"], room, lazy.function(
+        window_to_room(room))))

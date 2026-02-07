@@ -6,10 +6,7 @@ from libqtile.config import Key, Drag, Click
 from libqtile.lazy import lazy
 
 from .commands import mod, alt, ctrl, shft, command
-from .workspaces import (
-    workspaces, rooms, wsp,
-    to_workspace, to_room, window_to_workspace, window_to_room
-)
+from .workspaces import wsp, workspace_keys
 
 # Current screen for toggle
 curr_screen = 0
@@ -142,13 +139,6 @@ keys = [
     Key([shft], 'Print', lazy.spawn(command.record)),
 ]
 
-# Assign individual hotkeys for each workspace we have
-for workspace, hotkey in workspaces:
-    keys.append(Key([mod], hotkey, lazy.function(
-        to_workspace(workspace))))
-    keys.append(Key([mod, "shift"], hotkey, lazy.function(
-        window_to_workspace(workspace))))
-
 # ScratchPad keys
 keys.extend([
     Key([mod, ctrl], "1", lazy.group['scratchpad'].dropdown_toggle('terminal')),
@@ -161,13 +151,8 @@ keys.extend([
     Key([mod, ctrl], "0", lazy.group['scratchpad'].dropdown_toggle('doc')),
 ])
 
-# Assign shared hotkeys for each room we have.
-# Decision about actual group to open is made dynamically.
-for room in rooms:
-    keys.append(Key([mod], room, lazy.function(
-        to_room(room))))
-    keys.append(Key([mod, "shift"], room, lazy.function(
-        window_to_room(room))))
+# Workspace and room keybindings (from workspaces module)
+keys.extend(workspace_keys)
 
 # Mouse bindings
 mouse = [
