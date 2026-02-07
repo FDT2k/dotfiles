@@ -1,0 +1,8 @@
+@theme "~/.cache/wal/colors-rofi-dark.rasi"
+
+* {
+    background-alt: @background;
+    selected:       @selected-normal-background;
+    active:         @selected-active-background;
+    urgent:         @selected-urgent-background;
+}

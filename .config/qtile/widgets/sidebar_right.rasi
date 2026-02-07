@@ -1,0 +1,103 @@
+/* Rofi Sidebar Theme - Right positioning */
+
+@import "~/.config/qtile/widgets/colors.rasi"
+
+
+window {
+    location:       east;      /* east = right side */
+    anchor:         east;
+    width:          300px;
+    height:         100%;
+    background-color: @background;
+    border:         0px 0px 0px 2px;
+    border-color:   @selected;
+}
+
+mainbox {
+    children:       [ inputbar, message, listview ];
+    background-color: transparent;
+    spacing:        0px;
+}
+
+inputbar {
+    children:       [ prompt, entry ];
+    background-color: @background-alt;
+    padding:        15px;
+}
+
+prompt {
+    enabled:        true;
+    padding:        0px 10px 0px 0px;
+    background-color: transparent;
+    text-color:     @selected;
+    font:           "Sans Bold 14";
+}
+
+entry {
+    background-color: transparent;
+    text-color:     @foreground;
+    placeholder:    "Search...";
+    placeholder-color: #888888;
+    font:           "Sans 12";
+}
+
+message {
+    background-color: @background-alt;
+    padding:        10px;
+    border:         0px 0px 1px 0px;
+    border-color:   @selected;
+}
+
+textbox {
+    text-color:     @foreground;
+}
+
+listview {
+    background-color: transparent;
+    padding:        10px;
+    columns:        1;
+    lines:          15;
+    scrollbar:      true;
+    fixed-height:   false;
+    dynamic:        true;
+}
+
+scrollbar {
+    width:          4px;
+    handle-width:   4px;
+    handle-color:   @selected;
+    background-color: @background-alt;
+}
+
+element {
+    padding:        12px 15px;
+    background-color: transparent;
+    text-color:     @foreground;
+    border-radius:  4px;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color:     @foreground;
+}
+
+element selected.normal {
+    background-color: @selected;
+    text-color:     @background;
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color:     @foreground;
+}
+
+element-icon {
+    size:           24px;
+    margin:         0px 10px 0px 0px;
+}
+
+element-text {
+    vertical-align: 0.5;
+    text-color:     inherit;
+    background-color: transparent;
+}

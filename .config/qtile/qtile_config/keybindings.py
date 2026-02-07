@@ -107,13 +107,14 @@ keys = [
     Key([mod, shft], "Tab", lazy.screen.prev_group()),
 
     # app shortcuts
-    Key([mod, alt], "n", lazy.spawn("networkmanager_dmenu")),
+    #Key([mod, alt], "n", lazy.spawn("networkmanager_dmenu")),
     Key([mod, alt], "q", lazy.spawn(command.browser)),
     Key([mod, alt], "a", lazy.spawn(command.app_menu)),
     Key([mod], "r", lazy.function(run_prompt)),
     Key([mod, alt], "p", lazy.spawn(command.pacman)),
     Key([mod, ctrl], "p", lazy.spawn(command.power)),
     Key([mod], "b", lazy.spawn(command.bluetooth)),
+    Key([mod], "n", lazy.spawn(command.network)),
     Key([mod, alt], "b", lazy.spawn(command.barrier)),
     Key([mod, alt], "t", lazy.function(pick_theme)),
     Key([mod, alt], "v", lazy.spawn(command.virt)),

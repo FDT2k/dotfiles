@@ -13,8 +13,9 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from rofi import Rofi
 
-#rofi = Rofi(rofi_args=['-theme', '~/.config/rofi/left_toolbar.rasi'])
-rofi = Rofi(rofi_args=[])
+# Use sidebar theme from same directory
+theme_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sidebar.rasi')
+rofi = Rofi(rofi_args=['-theme', theme_path])
 
 
 def run_cmd(cmd):

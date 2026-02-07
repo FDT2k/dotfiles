@@ -59,3 +59,5 @@ class command:
         __file__), '../bin/copyq.sh'),
     bluetooth = os.path.join(os.path.dirname(
         __file__), '../widgets/bluetooth_widget.py')
+    network = os.path.join(os.path.dirname(
+        __file__), '../widgets/network_widget.py')
