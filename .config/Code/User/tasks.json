@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Open GittyUp",
+            "type": "shell",
+            "command": "/usr/bin/gittyup \"${fileDirname}\" 2>/dev/null",
+            "problemMatcher": []
+        },
+         {
+            "label": "Open Terminator",
+            "type": "shell",
+            "command": "/usr/bin/terminator --working-directory=\"${fileDirname}\" ",
+            "problemMatcher": []
+        }
+    ]
+}

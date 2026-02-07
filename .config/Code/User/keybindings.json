@@ -1,0 +1,14 @@
+// Place your key bindings in this file to override the defaults
+[
+   {
+    "key": "ctrl+alt+g",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Open GittyUp"
+    },
+
+    {
+    "key": "ctrl+alt+t",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Open Terminator"
+    }
+]
