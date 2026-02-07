@@ -57,3 +57,5 @@ class command:
         __file__), '../bin/run.sh screenlayout.d "Monitor Layout"'),
     copyq = os.path.join(os.path.dirname(
         __file__), '../bin/copyq.sh'),
+    bluetooth = os.path.join(os.path.dirname(
+        __file__), '../widgets/bluetooth_widget.py')

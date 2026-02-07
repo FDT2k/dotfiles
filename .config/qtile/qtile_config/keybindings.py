@@ -113,6 +113,7 @@ keys = [
     Key([mod], "r", lazy.function(run_prompt)),
     Key([mod, alt], "p", lazy.spawn(command.pacman)),
     Key([mod, ctrl], "p", lazy.spawn(command.power)),
+    Key([mod], "b", lazy.spawn(command.bluetooth)),
     Key([mod, alt], "b", lazy.spawn(command.barrier)),
     Key([mod, alt], "t", lazy.function(pick_theme)),
     Key([mod, alt], "v", lazy.spawn(command.virt)),
