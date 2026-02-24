@@ -2,114 +2,86 @@
 
 export KDA_WORK="$HOME/Documents/fastwork/kda-dev"
 
+_docker_php_run() {
+    local version=$1
+    local cmd=$2
+    local composer_file=$3
+    shift 3
 
-c2_82_dev () {
-	docker run --rm --interactive --tty -e COMPOSER=composer.dev.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2 "$@"
-}
-c2_82_agent () {
-	docker run --rm --interactive --tty -e COMPOSER=composer.agents.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2 "$@"
-}
+    local workspace="${PHP_WORKSPACE:-$KDA_WORK}"
+    local debian="${PHP_DEBIAN:-trixie}"
+    local image="registry.gitlab.com/karsegard/docker-infomaniak:${version}-${debian}"
 
-c2_82_prod () {
-	docker run --rm --interactive --tty -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2 "$@"
-}
-c2_82() {
-	docker run --rm --interactive --tty -e COMPOSER=composer.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2 "$@"
-}
+    local xdebug_args=()
+    if [[ "$cmd" == "php" ]]; then
+        xdebug_args=(
+            --add-host=host.docker.internal:host-gateway
+            -e XDEBUG_CONFIG="idekey=vsc client_host=host.docker.internal client_port=9003"
+            -e XDEBUG_MODE=debug,develop
+            -e XDEBUG_TRIGGER=1
+            -e XDEBUG_START_WITH_REQUEST=yes
+            -e XDEBUG_CLIENT_HOST=host.docker.internal
+            -e XDEBUG_CLIENT_PORT=9003
+        )
+    fi
 
-
-c2_83_base () {
     docker run --rm -it \
-        -e COMPOSER="$1" \
+        -e COMPOSER="$composer_file" \
         -e COMPOSER_HOME=/app/composer \
-        --mount type=bind,source="$KDA_WORK",target="$KDA_WORK",readonly \
+        "${xdebug_args[@]}" \
+        --mount type=bind,source="$workspace",target="$workspace",readonly \
         --mount type=bind,source="$(pwd)",target=/app \
         -w /app \
-        --user $(id -u):$(id -g) \
-        registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie \
-        composer2 "${@:2}"
+        --user "$(id -u):$(id -g)" \
+        "$image" "$cmd" "$@"
 }
 
-c2_83_dev () {
-        docker run --rm --interactive --tty -e COMPOSER=composer.dev.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
-}
+# --- composer wrappers: PHP 8.0 ---
+c2_80()       { _docker_php_run 8.0 composer2 composer.json "$@"; }
+c2_80_dev()   { _docker_php_run 8.0 composer2 composer.dev.json "$@"; }
+c2_80_prod()  { _docker_php_run 8.0 composer2 composer.prod.json "$@"; }
+c2_80_agent() { _docker_php_run 8.0 composer2 composer.agents.json "$@"; }
+c2_80_all()   { c2_80_dev "$@" && c2_80_prod "$@" && c2_80_agent "$@"; }
 
-c2_83_agent () {
-        docker run --rm --interactive --tty -e COMPOSER=composer.agents.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
-}
-c2_83_prod () {
-        docker run --rm --interactive --tty -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
-}
+# --- composer wrappers: PHP 8.1 ---
+c2_81()       { _docker_php_run 8.1 composer2 composer.json "$@"; }
+c2_81_dev()   { _docker_php_run 8.1 composer2 composer.dev.json "$@"; }
+c2_81_prod()  { _docker_php_run 8.1 composer2 composer.prod.json "$@"; }
+c2_81_agent() { _docker_php_run 8.1 composer2 composer.agents.json "$@"; }
+c2_81_all()   { c2_81_dev "$@" && c2_81_prod "$@" && c2_81_agent "$@"; }
 
-c2_83_all (){
-	c2_83_dev "$@"
-	c2_83_prod "$@"
-	c2_83_agent "$@"
-}
+# --- composer wrappers: PHP 8.2 ---
+c2_82()       { _docker_php_run 8.2 composer2 composer.json "$@"; }
+c2_82_dev()   { _docker_php_run 8.2 composer2 composer.dev.json "$@"; }
+c2_82_prod()  { _docker_php_run 8.2 composer2 composer.prod.json "$@"; }
+c2_82_agent() { _docker_php_run 8.2 composer2 composer.agents.json "$@"; }
+c2_82_all()   { c2_82_dev "$@" && c2_82_prod "$@" && c2_82_agent "$@"; }
 
-c2_83() {
-        docker run --rm --interactive --tty -e COMPOSER=composer.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
-}
-c2_84_agent () {
-        docker run --rm --interactive --tty -e COMPOSER=composer.agents.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.4-trixie composer2 "$@"
-}
+# --- composer wrappers: PHP 8.3 ---
+c2_83()       { _docker_php_run 8.3 composer2 composer.json "$@"; }
+c2_83_dev()   { _docker_php_run 8.3 composer2 composer.dev.json "$@"; }
+c2_83_prod()  { _docker_php_run 8.3 composer2 composer.prod.json "$@"; }
+c2_83_agent() { _docker_php_run 8.3 composer2 composer.agents.json "$@"; }
+c2_83_all()   { c2_83_dev "$@" && c2_83_prod "$@" && c2_83_agent "$@"; }
 
-c2_83_agent () {
-        docker run --rm --interactive --tty -e COMPOSER=composer.agents.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="/workspace",target="/workspace",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
-}
+# --- composer wrappers: PHP 8.4 ---
+c2_84()       { _docker_php_run 8.4 composer2 composer.json "$@"; }
+c2_84_dev()   { _docker_php_run 8.4 composer2 composer.dev.json "$@"; }
+c2_84_prod()  { _docker_php_run 8.4 composer2 composer.prod.json "$@"; }
+c2_84_agent() { _docker_php_run 8.4 composer2 composer.agents.json "$@"; }
+c2_84_all()   { c2_84_dev "$@" && c2_84_prod "$@" && c2_84_agent "$@"; }
 
+# --- composer wrappers: PHP 8.5 ---
+c2_85()       { _docker_php_run 8.5 composer2 composer.json "$@"; }
+c2_85_dev()   { _docker_php_run 8.5 composer2 composer.dev.json "$@"; }
+c2_85_prod()  { _docker_php_run 8.5 composer2 composer.prod.json "$@"; }
+c2_85_agent() { _docker_php_run 8.5 composer2 composer.agents.json "$@"; }
+c2_85_all()   { c2_85_dev "$@" && c2_85_prod "$@" && c2_85_agent "$@"; }
 
-alias c2-82="docker run --rm --interactive --tty -e COMPOSER=composer.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2"
-
-alias c2-82-prod="docker run --rm --interactive --tty -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2"
-
-alias c2-82-shell="docker run --rm --interactive --tty -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie bash"
-
-alias p82="docker run --rm --interactive --tty -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie php"
-
-
-
-alias c2-83-dev="docker run --rm --interactive --tty -e COMPOSER=composer.dev.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2"
-alias c2-83-shell="docker run --rm --interactive --tty -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie bash"
-# alias p83="docker run --rm --interactive --tty --add-host=host.docker.internal:host-gateway -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer  -e XDEBUG_CONFIG=\"idekey=vsc client_host=host.docker.internal client_port=9003\" -e XDEBUG_MODE=develop,debug -e XDEBUG_TRIGGER=1   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie php"
-
-alias p83='docker run --rm -it \
-  --add-host=host.docker.internal:host-gateway \
-  -e COMPOSER=composer.prod.json \
-  -e COMPOSER_HOME=/app/composer \
-  -e XDEBUG_CONFIG="idekey=vsc client_host=host.docker.internal client_port=9003" \
-  -e XDEBUG_MODE=debug,develop \
-  -e XDEBUG_TRIGGER=1 \
-  -e XDEBUG_START_WITH_REQUEST=yes \
-  -e XDEBUG_CLIENT_HOST=host.docker.internal \
-  -e XDEBUG_CLIENT_PORT=9003 \
-  --mount type=bind,source="$KDA_WORK",target="$KDA_WORK",readonly \
-  --mount type=bind,source="$(pwd)",target=/app \
-  -w /app \
-  --user $(id -u):$(id -g) \
-  registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie php'
-
-
-# Fonction générique
-docker_php () {
-  local version=$1   # ex: 8.2, 8.3...
-  local cmd=$2       # ex: composer2, bash, php...
-  local env=$3       # ex: dev, prod (optionnel)
-
-  local image="registry.gitlab.com/karsegard/docker-infomaniak:${version}-trixie"
-  local composer_file="composer.${env}.json"
-
-  # Si env est vide => par défaut prod
-  if [[ -z "$env" ]]; then
-    composer_file="composer.prod.json"
-  fi
-
-  docker run --rm -it \
-    -e COMPOSER="$composer_file" \
-    -e COMPOSER_HOME=/app/composer \
-    --mount type=bind,source="$KDA_WORK",target="$KDA_WORK",readonly \
-    --mount type=bind,source="$(pwd)",target=/app \
-    -w /app \
-    --user "$(id -u):$(id -g)" \
-    "$image" "$cmd"
-}
+# --- php+xdebug wrappers ---
+p80() { _docker_php_run 8.0 php composer.prod.json "$@"; }
+p81() { _docker_php_run 8.1 php composer.prod.json "$@"; }
+p82() { _docker_php_run 8.2 php composer.prod.json "$@"; }
+p83() { _docker_php_run 8.3 php composer.prod.json "$@"; }
+p84() { _docker_php_run 8.4 php composer.prod.json "$@"; }
+p85() { _docker_php_run 8.5 php composer.prod.json "$@"; }
