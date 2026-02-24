@@ -124,7 +124,6 @@ config config --local status.showUntrackedFiles no
 
 alias chromium-w='chromium --enable-features=UseOzonePlatform --ozone-platform=wayland'
 
-source ~/.shell/init-php-aliases.sh
 
 #alias gitsmtags="for i in $(git config --file .gitmodules --get-regexp path | awk '{ print $2 }'); do echo $i\":\"; git push --tags ; done"
 #export NVM_DIR="$HOME/.nvm"
@@ -147,6 +146,7 @@ gu() {
 wal --vte -Rq
 EDITOR=ox
 source $HOME/.shell-keys/keys
+source $HOME/.shell/php.sh
 source $HOME/.shell/ai-core.sh
 source $HOME/.shell/kda-workspace.sh
 source <(fzf --zsh)
