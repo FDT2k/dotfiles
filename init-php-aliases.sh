@@ -6,6 +6,9 @@ export KDA_WORK="$HOME/Documents/fastwork/kda-dev"
 c2_82_dev () {
 	docker run --rm --interactive --tty -e COMPOSER=composer.dev.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2 "$@"
 }
+c2_82_agent () {
+	docker run --rm --interactive --tty -e COMPOSER=composer.agents.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2 "$@"
+}
 
 c2_82_prod () {
 	docker run --rm --interactive --tty -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2 "$@"
@@ -14,15 +17,45 @@ c2_82() {
 	docker run --rm --interactive --tty -e COMPOSER=composer.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.2-trixie composer2 "$@"
 }
 
+
+c2_83_base () {
+    docker run --rm -it \
+        -e COMPOSER="$1" \
+        -e COMPOSER_HOME=/app/composer \
+        --mount type=bind,source="$KDA_WORK",target="$KDA_WORK",readonly \
+        --mount type=bind,source="$(pwd)",target=/app \
+        -w /app \
+        --user $(id -u):$(id -g) \
+        registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie \
+        composer2 "${@:2}"
+}
+
 c2_83_dev () {
         docker run --rm --interactive --tty -e COMPOSER=composer.dev.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
 }
 
+c2_83_agent () {
+        docker run --rm --interactive --tty -e COMPOSER=composer.agents.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
+}
 c2_83_prod () {
         docker run --rm --interactive --tty -e COMPOSER=composer.prod.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
 }
+
+c2_83_all (){
+	c2_83_dev "$@"
+	c2_83_prod "$@"
+	c2_83_agent "$@"
+}
+
 c2_83() {
         docker run --rm --interactive --tty -e COMPOSER=composer.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
+}
+c2_84_agent () {
+        docker run --rm --interactive --tty -e COMPOSER=composer.agents.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="$(echo $KDA_WORK)",target="$(echo $KDA_WORK)",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.4-trixie composer2 "$@"
+}
+
+c2_83_agent () {
+        docker run --rm --interactive --tty -e COMPOSER=composer.agents.json -e COMPOSER_HOME=/app/composer   --mount type=bind,source="/workspace",target="/workspace",readonly     --mount type=bind,source="$(pwd)",target=/app -w /app  --user $(id -u):$(id -g) registry.gitlab.com/karsegard/docker-infomaniak:8.3-trixie composer2 "$@"
 }
 
 

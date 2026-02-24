@@ -7,11 +7,31 @@
             "command": "/usr/bin/gittyup \"${fileDirname}\" 2>/dev/null",
             "problemMatcher": []
         },
-         {
+        {
             "label": "Open Terminator",
             "type": "shell",
             "command": "/usr/bin/terminator --working-directory=\"${fileDirname}\" ",
             "problemMatcher": []
+        },
+        {
+            "label": "Freya",
+            "type": "shell",
+            "command": "/home/fabien/bin/freya daemon",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "options": {
+                "cwd": "${fileWorkspaceFolder}"
+            },
+
+        },
+        {
+            "label": "Agent shell php 84",
+            "type": "shell",
+            "command": "/usr/bin/terminator --working-directory=\"/workspace\"",
+            "problemMatcher": []
+
         }
     ]
 }

@@ -147,5 +147,7 @@ gu() {
 wal --vte -Rq
 EDITOR=ox
 source $HOME/.shell-keys/keys
+source $HOME/.shell/ai-core.sh
+source $HOME/.shell/kda-workspace.sh
 source <(fzf --zsh)
 export PATH="$HOME/.local/bin:$PATH"
