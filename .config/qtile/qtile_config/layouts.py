@@ -5,18 +5,20 @@ from libqtile import layout
 from .themes import theme
 
 layouts = [
-    layout.Max(
-        border_width=2,
-        border_focus=theme.bg_active,
-        border_normal=theme.bg,
-        margin=theme.margin
-    ),
     layout.Bsp(
         border_width=4,
         border_focus=theme.bg_active,
         border_normal=theme.bg,
         margin=theme.margin
     ),
+    
+    layout.Max(
+        border_width=2,
+        border_focus=theme.bg_active,
+        border_normal=theme.bg,
+        margin=theme.margin
+    ),
+    
     layout.TreeTab(
         active_bg=theme.bg_active,
         bg_color=theme.bg,

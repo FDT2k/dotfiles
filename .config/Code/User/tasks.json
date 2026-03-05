@@ -27,10 +27,27 @@
 
         },
         {
+            "label": "Agent shell php 83",
+            "type": "shell",
+            "command": "/usr/bin/terminator --working-directory=\"/workspace\" -e \"~/bin/vscode-agent-shell.sh adam 8.3 trixie ${fileWorkspaceFolder}; \"",
+            "problemMatcher": []
+
+        },
+          {
+            "label": "Agent shell php 82",
+            "type": "shell",
+            "command": "/usr/bin/terminator --working-directory=\"/workspace\" -e \"~/bin/vscode-agent-shell.sh adam 8.2 trixie ${fileWorkspaceFolder}; \"",
+            "problemMatcher": []
+
+        },
+          {
             "label": "Agent shell php 84",
             "type": "shell",
-            "command": "/usr/bin/terminator --working-directory=\"/workspace\"",
-            "problemMatcher": []
+            "command": "/usr/bin/terminator --working-directory=\"/workspace\" -e \"~/bin/vscode-agent-shell.sh adam 8.4 trixie ${fileWorkspaceFolder}; \"",
+            "problemMatcher": [],
+            "presentation": {
+        "panel": "new"
+    },
 
         }
     ]
