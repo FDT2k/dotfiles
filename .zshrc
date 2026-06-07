@@ -122,6 +122,8 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 compdef config=git
 config config --local status.showUntrackedFiles no
 
+alias configstage='config add -u'
+
 alias chromium-w='chromium --enable-features=UseOzonePlatform --ozone-platform=wayland'
 
 
