@@ -16,22 +16,18 @@ _docker_php_run() {
     if [[ "$cmd" == "php" ]]; then
         xdebug_args=(
             --add-host=host.docker.internal:host-gateway
-            -e XDEBUG_CONFIG="idekey=vsc client_host=host.docker.internal client_port=9003"
-            -e XDEBUG_MODE=debug,develop
-            -e XDEBUG_TRIGGER=1
-            -e XDEBUG_START_WITH_REQUEST=yes
-            -e XDEBUG_CLIENT_HOST=host.docker.internal
-            -e XDEBUG_CLIENT_PORT=9003
+	    -e XDEBUG_MODE=debug
+            -e XDEBUG_CONFIG="client_host=host.docker.internal client_port=9003 idekey=vsc start_with_request=yes"
         )
     fi
 
     docker run --rm -it \
         -e COMPOSER="$composer_file" \
-        -e COMPOSER_HOME=/app/composer \
+        -e COMPOSER_HOME=/var/www/html/composer \
         "${xdebug_args[@]}" \
         --mount type=bind,source="$workspace",target="$workspace",readonly \
-        --mount type=bind,source="$(pwd)",target=/app \
-        -w /app \
+        --mount type=bind,source="$(pwd)",target=/var/www/html \
+        -w /var/www/html \
         --user "$(id -u):$(id -g)" \
         "$image" "$cmd" "$@"
 }

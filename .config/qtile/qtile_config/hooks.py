@@ -2,7 +2,7 @@
 
 import os
 import subprocess
-
+import json
 from libqtile import hook
 from libqtile.lazy import lazy
 from libqtile.log_utils import logger
@@ -17,6 +17,17 @@ def screen_change():
 
 @hook.subscribe.client_new
 def agroup(client):
+    # 1) Check si qlaunch a demandé un groupe spécifique
+    spawn_target = "/tmp/qtile_spawn_target"
+    if os.path.exists(spawn_target):
+        with open(spawn_target) as f:
+            target = json.load(f)
+        os.remove(spawn_target)
+        group = target.get("group")
+        if group:
+            client.togroup(get_group_name(wsp['current'], group))
+            return  # priorité au qlaunch, on skip le reste
+
     # replace class_name with the actual
     # class name of the app
     # you can use xprop to find it

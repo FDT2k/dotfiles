@@ -8,6 +8,7 @@ from .layouts import FONT_SIZE
 from .workspaces import wsp, get_workspace_groups
 
 screens = [
+
     Screen(
         top=bar.Bar(
             [
@@ -90,5 +91,8 @@ screens = [
             margin=[10, 10, 0, 10],
         ),
     ),
+    Screen(),
+
+    Screen(),
     Screen(),
 ]

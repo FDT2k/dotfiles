@@ -67,6 +67,22 @@ def move_cursor(arg):
     subprocess.Popen(["xdotool", "mousemove", coord[0], coord[1]])
 
 
+@lazy.function
+def toggle_center(qtile):
+    win = qtile.current_window
+    if win:
+        if win.floating:
+            win.toggle_floating()  # repasse en tiling
+        else:
+            screen = qtile.current_screen
+            sw = screen.width
+            sh = screen.height
+            w = int(sh * 16 / 9)
+            x = (sw - w) // 2
+            win.toggle_floating()
+            win.set_size_floating(w, sh)
+            win.set_position_floating(x, 0)
+
 # Base keys
 keys = [
     # Switch between windows in current stack pane
@@ -95,7 +111,7 @@ keys = [
 
     # screen focus
     Key([mod], "q", lazy.function(toggle_screen_focus)),
-
+    Key([mod,shft], "f", toggle_center()),
     # Computer control
     Key([mod, ctrl], "r", lazy.restart()),
     Key([mod], "l", lazy.spawn(command.lock)),

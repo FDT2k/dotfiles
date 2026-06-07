@@ -4,4 +4,6 @@
 #import ~/Pictures/$(date +'%Y%m0-%H%m%S').png 
 
 
-flameshot gui
+#flameshot gui
+
+maim -s | swappy -f -

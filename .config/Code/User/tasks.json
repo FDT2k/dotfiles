@@ -4,13 +4,19 @@
         {
             "label": "Open GittyUp",
             "type": "shell",
-            "command": "/usr/bin/gittyup \"${fileDirname}\" 2>/dev/null",
+            "command": "/home/fabien/bin/qlaunch -g y /usr/bin/gittyup \"${fileDirname}\" 2>/dev/null",
+            "problemMatcher": []
+        },
+         {
+            "label": "Pint",
+            "type": "shell",
+            "command": "vendor/bin/pint \"${file}\" 2>/dev/null",
             "problemMatcher": []
         },
         {
             "label": "Open Terminator",
             "type": "shell",
-            "command": "/usr/bin/terminator --working-directory=\"${fileDirname}\" ",
+            "command": "/home/fabien/bin/qlaunch -g d /usr/bin/terminator --working-directory=\"${fileWorkspaceFolder}\" ",
             "problemMatcher": []
         },
         {
@@ -23,32 +29,49 @@
             },
             "options": {
                 "cwd": "${fileWorkspaceFolder}"
+            }
+        },
+        {
+            "label": "Sail",
+            "type": "shell",
+            "command": "cd ${fileWorkspaceFolder} && bash ./vendor/bin/sail up -d && bash ./start_dev_db.sh",
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared",
+                "focus":false,
             },
-
+            "options": {
+                "cwd": "${fileWorkspaceFolder}",
+                "shell": {
+                    "executable": "/usr/bin/zsh",
+                    "args": [
+                        "-i",
+                        "-c"
+                    ]
+                }
+            },
+            "problemMatcher": []
         },
         {
             "label": "Agent shell php 83",
             "type": "shell",
             "command": "/usr/bin/terminator --working-directory=\"/workspace\" -e \"~/bin/vscode-agent-shell.sh adam 8.3 trixie ${fileWorkspaceFolder}; \"",
             "problemMatcher": []
-
         },
-          {
+        {
             "label": "Agent shell php 82",
             "type": "shell",
             "command": "/usr/bin/terminator --working-directory=\"/workspace\" -e \"~/bin/vscode-agent-shell.sh adam 8.2 trixie ${fileWorkspaceFolder}; \"",
             "problemMatcher": []
-
         },
-          {
+        {
             "label": "Agent shell php 84",
             "type": "shell",
             "command": "/usr/bin/terminator --working-directory=\"/workspace\" -e \"~/bin/vscode-agent-shell.sh adam 8.4 trixie ${fileWorkspaceFolder}; \"",
             "problemMatcher": [],
             "presentation": {
-        "panel": "new"
-    },
-
+                "panel": "new"
+            }
         }
     ]
 }
