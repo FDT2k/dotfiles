@@ -123,6 +123,7 @@ compdef config=git
 config config --local status.showUntrackedFiles no
 
 alias configstage='config add -u'
+alias configsave='configstage; config commit -m "ctd"; config push origin master:main'
 
 alias chromium-w='chromium --enable-features=UseOzonePlatform --ozone-platform=wayland'
 
