@@ -4,7 +4,7 @@
         {
             "label": "Open GittyUp",
             "type": "shell",
-            "command": "/home/fabien/bin/qlaunch -g y /usr/bin/gittyup \"${fileDirname}\" 2>/dev/null",
+            "command": "/home/fabien/bin/qlaunch -g d /usr/bin/gittyup \"${fileDirname}\" 2>/dev/null",
             "problemMatcher": []
         },
          {
