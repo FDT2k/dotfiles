@@ -126,6 +126,17 @@ elif [ "$1" == "yarn" ]; then
     else
         rocket_is_not_running
     fi
+elif [ "$1" == "mariadb" ]; then
+    shift 1
+
+    if [ "$EXEC" == "yes" ]; then
+        ARGS+=(exec)
+        [ ! -t 0 ] && ARGS+=(-T)
+        ARGS+=(mariadb bash -c)
+        ARGS+=("MARIADB_PASSWORD=\${MARIADB_PASSWORD} mariadb -u \${MARIADB_USER} -p\${MARIADB_PASSWORD} \${MARIADB_DATABASE}")
+    else
+        rocket_is_not_running
+    fi
 fi
 
 echo ${COMPOSE_CMD[@]} ${ARGS[@]} "$@"
