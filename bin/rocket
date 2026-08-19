@@ -12,6 +12,8 @@ export WWWGROUP=${WWWGROUP:-$(id -g)}
 
 export ROCKET_FILES=${ROCKET_FILES:-"rocket.yml"}  #docker compose files
 export ROCKET_DOCKER_BINARY=${ROCKET_DOCKER_BINARY:-"docker"}
+export ROCKET_MONOREPO_ROOT=../..
+export ROCKET_WS_ROOT=$(realpath $ROCKET_MONOREPO_ROOT)
 
 # Function that outputs Rocket is not running...
 function rocket_is_not_running {
@@ -45,6 +47,13 @@ if [ -n "$ROCKET_FILES" ]; then
 fi
 
 EXEC="yes"
+
+if [ "$1" == "down" ]; then
+    if [ -f rocket-hook-before-down.sh ]; then
+        echo "running pre down script"
+        ./rocket-hook-before-down.sh
+    fi
+fi
 
 # Proxy PHP commands to the "php" binary on the application container...
 if [ "$1" == "php" ]; then
@@ -142,3 +151,13 @@ fi
 echo ${COMPOSE_CMD[@]} ${ARGS[@]} "$@"
 # Run Docker Compose with the defined arguments...
 "${COMPOSE_CMD[@]}" "${ARGS[@]}" "$@"
+
+if [ "$1" == "up" ]; then
+    shift 1
+    if [ $# -gt 0 ]; then
+    if [ -f rocket-hook-post-up.sh ]; then
+        echo "running post up script"
+        ./rocket-hook-post-up.sh
+    fi
+    fi
+fi
