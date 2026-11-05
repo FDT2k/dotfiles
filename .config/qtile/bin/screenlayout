@@ -1,0 +1,38 @@
+#!/bin/bash
+# Screen layouts of the current machine, from screenlayout.d/:
+#   {hostname}.sh         default layout (run by SDDM and autostart.sh)
+#   {hostname}_{name}.sh  variant, listed as {name}
+#
+#   screenlayout            rofi menu: default, variants, arandr
+#   screenlayout --default  apply {hostname}.sh, if any, without a menu
+
+LAYOUTS="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)/screenlayout.d"
+HOST="$(uname -n)"
+DEFAULT="$LAYOUTS/$HOST.sh"
+
+if [ "$1" = --default ]; then
+    [ -x "$DEFAULT" ] || exit 0
+    exec "$DEFAULT"
+fi
+
+entries=()
+[ -x "$DEFAULT" ] && entries+=(default)
+for f in "$LAYOUTS/${HOST}_"*.sh; do
+    [ -f "$f" ] && [ -x "$f" ] || continue
+    name="${f##*/${HOST}_}"
+    entries+=("${name%.sh}")
+done
+entries+=(arandr)
+
+choice=$(printf '%s\n' "${entries[@]}" | rofi -dmenu -p "Monitor Layout")
+
+case "$choice" in
+    "") exit 0 ;;
+    default) exec "$DEFAULT" ;;
+    arandr) exec "$LAYOUTS/arandr" ;;
+    *)
+        target="$LAYOUTS/${HOST}_$choice.sh"
+        [ -x "$target" ] || exit 1
+        exec "$target"
+        ;;
+esac

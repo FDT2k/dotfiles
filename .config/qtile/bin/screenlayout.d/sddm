@@ -1,1 +1,5 @@
-daoloth.sh
+#!/bin/sh
+# Run by SDDM before the login screen (/etc/sddm.conf.d/10-dotfiles.conf,
+# written by install-arch-deps.sh sddm): apply the default layout of this
+# machine, {hostname}.sh. Do not rename or move this file.
+exec "$(dirname "$(readlink -f "$0")")/../screenlayout" --default
