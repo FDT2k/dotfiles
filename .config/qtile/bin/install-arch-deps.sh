@@ -1,10 +1,11 @@
 #!/bin/bash
 # Install the Arch packages for rofi, the theme/wallpaper chain (hellwal),
 # the screen lock (i3lock-multimonitor), notifications (dunst), the
-# terminal (terminator) and the screen layouts (arandr, xrandr).
+# terminal (terminator), the screen layouts (arandr, xrandr) and the Qtile bar
+# fonts.
 #
 #   install-arch-deps.sh                 # every group
-#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst, terminator, screens
+#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst, terminator, screens, fonts
 #
 # Official repositories only (pacman), no AUR: packages already installed are
 # skipped (--needed). Tools that are not packaged are built from git (see
@@ -32,6 +33,9 @@ TERMINATOR_PKGS=(terminator)
 # Screen layouts: arandr entry of the screenlayout.d menu; xrandr for the
 # other entries and bin/monitor_layout/
 SCREENS_PKGS=(arandr xorg-xrandr)
+# Qtile bar fonts: Arimo (ttf-croscore) for the ◢ ◤ arrows, Open Sans for the
+# GroupBox
+FONTS_PKGS=(ttf-croscore ttf-opensans)
 
 # Git recipes: name, repository, binary built by make (relative to the repo)
 HELLWAL_GIT=(hellwal https://github.com/FDT2k/hellwal.git hellwal)
@@ -77,7 +81,7 @@ warn_hellwal_shadowed() {
 }
 
 groups=("$@")
-[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst terminator screens)
+[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst terminator screens fonts)
 
 pkgs=()
 want_hellwal=no
@@ -89,7 +93,8 @@ for g in "${groups[@]}"; do
         dunst) pkgs+=("${DUNST_PKGS[@]}") ;;
         terminator) pkgs+=("${TERMINATOR_PKGS[@]}") ;;
         screens) pkgs+=("${SCREENS_PKGS[@]}") ;;
-        *)     echo "unknown group: $g (rofi, theme, lock, dunst, terminator, screens)" >&2; exit 2 ;;
+        fonts) pkgs+=("${FONTS_PKGS[@]}") ;;
+        *)     echo "unknown group: $g (rofi, theme, lock, dunst, terminator, screens, fonts)" >&2; exit 2 ;;
     esac
 done
 
