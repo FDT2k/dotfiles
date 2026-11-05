@@ -54,7 +54,6 @@ Documentation détaillée dans `.config/qtile/CLAUDE.md`. Points structurants :
 - `.config/rofi/config.rasi` : configuration de rofi, sur le thème généré `~/.cache/wal/colors-rofi-dark.rasi`.
 - SDDM : `.config/qtile/bin/install-arch-deps.sh sddm` écrit `/etc/sddm.conf.d/10-dotfiles.conf`, qui lance `.config/qtile/bin/screenlayout.d/sddm` avant le login et choisit le thème `.local/share/sddm/themes/fdt2k-dark`, lié depuis `/usr/share/sddm/themes/`. `theme.conf.user` y est généré par `bin/theme/sddm` et ignoré par git.
 - `.config/terminator/config` : profils, layouts et raccourcis de Terminator. `bin/floatterm` dépend du profil `hold` et du layout `floating` qui y sont définis.
-- `.local/fabien/` : copie autonome de certains outils (i3lock-multimonitor, `rofi-run` lisant `rofi-items/*.d`) qui duplique en partie `.config/qtile/bin/`.
 - `.config/Code/User/` : raccourcis et tâches VS Code (s'appuient sur `~/bin/qlaunch`, `~/bin/freya`, `vendor/bin/pint`).
 
 ## Tests
