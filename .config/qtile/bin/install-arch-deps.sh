@@ -39,7 +39,9 @@ SCREENS_PKGS=(arandr xorg-xrandr)
 FONTS_PKGS=(ttf-croscore ttf-opensans)
 # Login screen: SDDM, configured by setup_sddm (screen layout before the
 # login, fdt2k-dark theme). Touches the system: not a default group.
-SDDM_PKGS=(sddm)
+# The theme runs on the Qt 6 greeter (QtVersion=6): Qt5Compat.GraphicalEffects
+# for its shadows, svg for its icons, the virtual keyboard component.
+SDDM_PKGS=(sddm qt6-5compat qt6-svg qt6-virtualkeyboard)
 
 # SDDM paths, overridable for tests
 SDDM_CONF_DIR="${SDDM_CONF_DIR:-/etc/sddm.conf.d}"
