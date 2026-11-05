@@ -1,5 +1,6 @@
 # screens.py - Screen and bar configurations
 
+import glob
 import os
 
 from libqtile.config import Screen
@@ -19,6 +20,24 @@ else:
 # Negative padding of the ◢ ◤ arrows so that they touch the colored blocks
 # (-4 measured on qtile 0.37; -1 was enough on 0.34)
 ARROW_PADDING = -4
+
+# Battery widget only on machines that have one (the laptop, not the desktop)
+if glob.glob('/sys/class/power_supply/BAT*'):
+    battery_widgets = [
+        widget.Battery(
+            format='{char} {percent:2.0%}',
+            charge_char='↑',
+            discharge_char='↓',
+            full_char='=',
+            empty_char='!',
+            unknown_char='?',
+            low_percentage=0.15,
+            low_foreground=theme.bg_active,
+            update_interval=30,
+        ),
+    ]
+else:
+    battery_widgets = []
 
 screens = [
 
@@ -97,6 +116,7 @@ screens = [
                     padding=ARROW_PADDING
                 ),
                 widget.Systray(),
+                *battery_widgets,
                 widget.Clock(format='%d.%m.%Y %H:%M'),
                 widget.QuickExit(),
                 widget.Spacer(10),

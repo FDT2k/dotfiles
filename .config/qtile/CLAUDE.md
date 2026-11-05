@@ -34,7 +34,7 @@ Modular Python package structure:
 | `workspaces.py` | Workspaces, rooms, groups, ScratchPad, `workspace_keys` |
 | `layouts.py` | Layout definitions (Max, Bsp, TreeTab), widget_defaults |
 | `keybindings.py` | All key and mouse bindings |
-| `screens.py` | Screen and bar configurations |
+| `screens.py` | Screen and bar configurations (Battery widget added only when `/sys/class/power_supply/BAT*` exists) |
 | `hooks.py` | Qtile hook subscriptions (client_new, startup) |
 
 **Dependency order:**
