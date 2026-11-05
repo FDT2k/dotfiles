@@ -32,7 +32,7 @@ bash -n <script>  /  zsh -n .zshrc                      # syntaxe shell
 qtile cmd-obj -o cmd -f restart                         # appliquer (machine réelle uniquement)
 ```
 
-Note : `qtile_config/themes.py` lit `~/.cache/wal/colors.json` à l'import ; sans ce fichier, l'import échoue (le `py_compile` reste possible). Sur un poste neuf, lancer `.config/qtile/bin/theme/hellwal-apply <image>` une fois avant de redémarrer Qtile.
+Note : `qtile_config/themes.py` lit `~/.cache/wal/colors.json` à l'import. S'il est absent, illisible ou s'il ne contient pas 16 couleurs `#rrggbb`, Qtile démarre avec une palette par défaut (`DEFAULT_COLORS`) et l'écrit dans son log. Pour obtenir le vrai thème, lancer `.config/qtile/bin/theme/hellwal-apply <image>`.
 
 ## Architecture
 
