@@ -16,6 +16,10 @@ if wallpaper and os.path.isfile(wallpaper):
 else:
     wallpaper_args = {}
 
+# Negative padding of the ◢ ◤ arrows so that they touch the colored blocks
+# (-4 measured on qtile 0.37; -1 was enough on 0.34)
+ARROW_PADDING = -4
+
 screens = [
 
     Screen(
@@ -28,7 +32,7 @@ screens = [
                     foreground=theme_neg.bg,
                     text="◢",
                     fontsize=(FONT_SIZE*5.25),
-                    padding=-1
+                    padding=ARROW_PADDING
                 ),
                 widget.GroupBox(
                     disable_drag=True,
@@ -50,7 +54,7 @@ screens = [
                     foreground=theme_neg.bg,
                     text="◤ ",
                     fontsize=(FONT_SIZE*5.25),
-                    padding=-1
+                    padding=ARROW_PADDING
                 ),
                 widget.Prompt(),
                 widget.WindowName(padding=0),
@@ -59,7 +63,7 @@ screens = [
                     foreground=theme_neg.bg,
                     text="◢",
                     fontsize=(FONT_SIZE*5.25),
-                    padding=-1
+                    padding=ARROW_PADDING
                 ),
                 widget.NetGraph(
                     bandwidth_type="up",
@@ -90,7 +94,7 @@ screens = [
                     foreground=theme_neg.bg,
                     text="◤ ",
                     fontsize=(FONT_SIZE*5.25),
-                    padding=-1
+                    padding=ARROW_PADDING
                 ),
                 widget.Systray(),
                 widget.Clock(format='%d.%m.%Y %H:%M'),
