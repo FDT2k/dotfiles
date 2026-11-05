@@ -1,6 +1,6 @@
 # Rendre la config Qtile compatible avec qtile 0.37 (appels `cmd_*` retirés, hook `screen_change` cassé)
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
