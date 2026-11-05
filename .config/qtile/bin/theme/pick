@@ -11,19 +11,28 @@ STR="$1"
 
 choice=$(echo -e "$OPTS" | rofi -lines 10 -dmenu -p "Theme")
 
-convert $FOLDER/$choice   -scale 10% -scale 1000%  ~/.cache/wal/wallpaper.png
+# Menu cancelled or not an image of the folder: leave everything as is
+[ -n "$choice" ] && [ -f "$FOLDER/$choice" ] || exit 0
+
+# Generate the theme first: on failure, touch nothing and say so
+"$DIR/hellwal-apply" "$FOLDER/$choice"
+code=$?
+if [ $code -ne 0 ]; then
+    notify-send -u critical "Thème" "hellwal-apply a échoué (code $code)"
+    exit $code
+fi
+
+convert "$FOLDER/$choice"   -scale 10% -scale 1000%  ~/.cache/wal/wallpaper.png
 
 #store choice for workspace 
 
 
-cp -a $FOLDER/$choice ~/.cache/wal/current-theme.jpg
+cp -a "$FOLDER/$choice" ~/.cache/wal/current-theme.jpg
 
 ln -s ~/.cache/wal/current-theme.jpg ~/.config/qtile/bin/i3lock-multimonitor/img/background.png
 
 rm  ~/.cache/wal/.theme-$STR.jpg
-ln -s  $FOLDER/$choice ~/.cache/wal/.theme-$STR.jpg
-
-$DIR/hellwal-apply "$FOLDER/$choice"
+ln -s  "$FOLDER/$choice" ~/.cache/wal/.theme-$STR.jpg
 
 qtile cmd-obj -o cmd -f restart
 

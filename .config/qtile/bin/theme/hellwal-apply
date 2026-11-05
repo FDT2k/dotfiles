@@ -9,7 +9,26 @@ if [ -z "$1" ]; then
     exit 2
 fi
 
-hellwal -i "$(realpath "$1")" -o "$HOME/.cache/wal" --comfort-mode --skip-term-colors -q || exit $?
+# hellwal may live outside the session PATH (Qtile does not read .zshrc):
+# PATH first, then ~/.config/qtile/bin, ~/bin, ~/.local/bin.
+QTILE_BIN="$(cd "$(dirname "$0")/.." && pwd)"
+HELLWAL=$(command -v hellwal)
+if [ -z "$HELLWAL" ]; then
+    for candidate in "$QTILE_BIN/hellwal" "$HOME/bin/hellwal" "$HOME/.local/bin/hellwal"; do
+        if [ -x "$candidate" ]; then
+            HELLWAL="$candidate"
+            break
+        fi
+    done
+fi
+if [ -z "$HELLWAL" ]; then
+    echo "hellwal-apply: hellwal not found (PATH, $QTILE_BIN/hellwal, $HOME/bin/hellwal, $HOME/.local/bin/hellwal)" >&2
+    exit 127
+fi
+
+mkdir -p "$HOME/.cache/wal"
+
+"$HELLWAL" -i "$(realpath "$1")" -o "$HOME/.cache/wal" --comfort-mode --skip-term-colors -q || exit $?
 
 TERMINAL_SH="$HOME/.cache/wal/terminal.sh"
 [ -f "$TERMINAL_SH" ] || exit 0

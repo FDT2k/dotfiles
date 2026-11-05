@@ -1,6 +1,6 @@
 # Changement de thème sans effet depuis Qtile : hellwal introuvable, échec silencieux
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
@@ -9,7 +9,7 @@ Le changement de thème passe par `.config/qtile/bin/theme/pick`. Qtile le lance
 
 1. affiche les images de `~/Pictures/themes` dans rofi ;
 2. copie l'image choisie (`wallpaper.png`, `current-theme.jpg`, lien `.theme-$STR.jpg` dans `~/.cache/wal/`) ;
-3. appelle `bin/theme/hellwal-apply`, le seul point d'appel de hellwal, posé par la spec `0da46c` ([archive](../archives/2026-11-05-0da46c-change-pywal_vers_hellwal.md)) ;
+3. appelle `bin/theme/hellwal-apply`, le seul point d'appel de hellwal, posé par la spec `0da46c` ([archive](./2026-11-05-0da46c-change-pywal_vers_hellwal.md)) ;
 4. redémarre Qtile, puis source `reload` et `sddm`.
 
 `hellwal-apply` appelle `hellwal` par son nom : il compte sur le `PATH` de l'appelant. Sur le laptop, hellwal n'est pas un paquet système. C'est un binaire placé à la main dans `~/bin`, et l'humain prévoit de le mettre plutôt dans `~/.config/qtile/bin/`. `~/bin` n'entre dans le `PATH` que par `.zshrc` (`export PATH=$PATH:...:$HOME/bin`). Une session X lancée par le gestionnaire de connexion ne lit pas `.zshrc`, et `~/.config/qtile/bin/` n'est dans aucun `PATH`.
