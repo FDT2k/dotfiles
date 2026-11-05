@@ -1,5 +1,7 @@
 # workspaces.py - Workspace and room management
 
+import re
+
 from libqtile.config import Group, ScratchPad, DropDown, Match, Key
 from libqtile.lazy import lazy
 from libqtile import widget
@@ -122,8 +124,10 @@ groups.append(ScratchPad(name='scratchpad', dropdowns=[
              height=0.9, x=0.05, y=0.05, opacity=0.95, match=Match(wm_class='terminator'), on_focus_lost_hide=False),
     DropDown('spotify', 'spotify', width=0.8,
              height=0.8, x=0.1, y=0.1, opacity=0.8, match=Match(wm_class='spotify'), on_focus_lost_hide=False),
-    DropDown('Telegram', 'org.telegram.desktop', width=0.8,
-             height=0.8, x=0.1, y=0.1, opacity=1, match=Match(wm_class='TelegramDesktop'), on_focus_lost_hide=False),
+    # Flatpak when installed (Qtile's PATH has no /var/lib/flatpak/exports/bin),
+    # native package otherwise; the window class varies between versions
+    DropDown('Telegram', "sh -c 'flatpak run org.telegram.desktop || exec telegram-desktop'", width=0.8,
+             height=0.8, x=0.1, y=0.1, opacity=1, match=Match(wm_class=re.compile(r'(?i)telegram')), on_focus_lost_hide=False),
     DropDown('mixer', 'pavucontrol', width=0.4,
              height=0.6, x=0.3, y=0.1, opacity=1, on_focus_lost_hide=False),
     DropDown('bitwarden', 'bitwarden-desktop',
