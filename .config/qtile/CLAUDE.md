@@ -80,10 +80,10 @@ The `bin/` directory uses a `.d` directory pattern for pluggable menus:
 
 ### Monitor Configuration
 
-Screen layouts live in `bin/screenlayout.d/`, listed by the "Monitor Layout" menu (`mod+alt+l`, `bin/run.sh screenlayout.d`):
-- `daoloth.sh` - desktop (daoloth) layout, `abhoth.sh` - laptop (abhoth) layout
-- `sddm` - link to `daoloth.sh`, run by SDDM before the login screen: do not rename it
-- `arandr` - opens the graphical layout editor
+Screen layouts are per machine, in `bin/screenlayout.d/`, named after `uname -n`:
+- `{hostname}.sh` - default layout (`daoloth.sh` desktop, `abhoth.sh` laptop); `{hostname}_{name}.sh` - variant `{name}` (e.g. a portable screen), saved with arandr
+- `bin/screenlayout` - rofi menu "Monitor Layout" (`mod+alt+l`): `default`, the variants of the current machine, `arandr`; `bin/screenlayout --default` applies `{hostname}.sh` (nothing if absent)
+- applied before the login by SDDM (`screenlayout.d/sddm`, a script running `screenlayout --default`: do not rename it) and at session start by `autostart.sh`
 
 ## Key Files
 

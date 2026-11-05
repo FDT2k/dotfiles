@@ -36,8 +36,7 @@ class command:
     sound = os.path.join(os.path.dirname(__file__),
                          '../bin/pulsaudio/sound-output.sh')
     theme = os.path.join(os.path.dirname(__file__), '../bin/theme/pick ')
-    screen_layout = os.path.join(os.path.dirname(
-        __file__), '../bin/run.sh screenlayout.d "Monitor Layout"'),
+    screen_layout = os.path.join(os.path.dirname(__file__), '../bin/screenlayout')
     copyq = os.path.join(os.path.dirname(
         __file__), '../bin/copyq.sh'),
     bluetooth = os.path.join(os.path.dirname(

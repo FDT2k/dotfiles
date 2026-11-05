@@ -1,6 +1,8 @@
 #!/bin/bash
 
 DIR=$(dirname $0)
+# Default screen layout of this machine, before the wallpaper is set
+$DIR/bin/screenlayout --default
 $DIR/bin/theme/reload &
 
 #telegram-desktop &

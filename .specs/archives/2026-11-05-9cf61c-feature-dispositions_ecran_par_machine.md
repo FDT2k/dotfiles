@@ -1,6 +1,6 @@
 # Dispositions d'écran par machine : {hostname}.sh par défaut, variantes {hostname}_{nom}.sh et menu rofi
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
