@@ -77,6 +77,8 @@ Item {
                 enabled: false
                 icon.color: root.palette.text
                 icon.source: Qt.resolvedUrl("../Assets/User.svgz")
+                // Qt 6 default style draws a button background: keep the icon alone
+                background: Item {}
         }
 
         background: Rectangle {
