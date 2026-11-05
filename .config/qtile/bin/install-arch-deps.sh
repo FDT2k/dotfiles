@@ -1,9 +1,10 @@
 #!/bin/bash
 # Install the Arch packages for rofi, the theme/wallpaper chain (hellwal),
-# the screen lock (i3lock-multimonitor) and notifications (dunst).
+# the screen lock (i3lock-multimonitor), notifications (dunst) and the
+# terminal (terminator).
 #
 #   install-arch-deps.sh                 # every group
-#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst
+#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst, terminator
 #
 # Official repositories only (pacman), no AUR: packages already installed are
 # skipped (--needed). hellwal is not in the official repositories: the script
@@ -23,9 +24,12 @@ THEME_PKGS=(imagemagick libnotify python)
 LOCK_PKGS=(i3lock xss-lock imagemagick xorg-xrandr)
 # Notifications: dunst, recolored by bin/theme/colorize-dunst; notify-send
 DUNST_PKGS=(dunst libnotify)
+# Terminal: Qtile's terminal, ScratchPad dropdown and bin/floatterm
+# (profiles and layouts in ~/.config/terminator/config)
+TERMINATOR_PKGS=(terminator)
 
 groups=("$@")
-[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst)
+[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst terminator)
 
 pkgs=()
 want_hellwal=no
@@ -35,7 +39,8 @@ for g in "${groups[@]}"; do
         theme) pkgs+=("${THEME_PKGS[@]}"); want_hellwal=yes ;;
         lock)  pkgs+=("${LOCK_PKGS[@]}") ;;
         dunst) pkgs+=("${DUNST_PKGS[@]}") ;;
-        *)     echo "unknown group: $g (rofi, theme, lock, dunst)" >&2; exit 2 ;;
+        terminator) pkgs+=("${TERMINATOR_PKGS[@]}") ;;
+        *)     echo "unknown group: $g (rofi, theme, lock, dunst, terminator)" >&2; exit 2 ;;
     esac
 done
 

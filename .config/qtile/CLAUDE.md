@@ -101,7 +101,7 @@ Preset layouts in `bin/monitor_layout/`:
 
 Core: qtile, rofi, xrandr, ImageMagick, xdotool, pamixer, pactl, hellwal, terminator
 
-`bin/install-arch-deps.sh [rofi|theme|lock|dunst]` installs the Arch packages of these groups (all by default), from the official repositories only: no AUR. hellwal is not packaged there; the script only checks that its binary is found (e.g. `bin/hellwal`). It is extended group by group, as machines are set up.
+`bin/install-arch-deps.sh [rofi|theme|lock|dunst|terminator]` installs the Arch packages of these groups (all by default), from the official repositories only: no AUR. hellwal is not packaged there; the script only checks that its binary is found (e.g. `bin/hellwal`). It is extended group by group, as machines are set up.
 
 ## Keybinding Conventions
 
