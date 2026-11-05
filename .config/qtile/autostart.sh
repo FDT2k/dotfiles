@@ -17,7 +17,10 @@ killall -9 aw-watcher-window
 
 killall -9 picom
 
-aw-qt &
+# ActivityWatch: ~/bin/aw-qt (install-arch-deps.sh activitywatch), else PATH
+AW_QT="$HOME/bin/aw-qt"
+[ -x "$AW_QT" ] || AW_QT="$(command -v aw-qt)"
+[ -n "$AW_QT" ] && "$AW_QT" &
 copyq &
 
 map_touch() {
