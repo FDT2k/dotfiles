@@ -35,7 +35,7 @@ Modular Python package structure:
 | `layouts.py` | Layout definitions (Max, Bsp, TreeTab), widget_defaults |
 | `keybindings.py` | All key and mouse bindings |
 | `screens.py` | Screen and bar configurations |
-| `hooks.py` | Qtile hook subscriptions (screen_change, client_new, startup) |
+| `hooks.py` | Qtile hook subscriptions (client_new, startup) |
 
 **Dependency order:**
 ```
