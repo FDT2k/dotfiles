@@ -1,4 +1,8 @@
 #!/bin/bash
+# Write the colors and wallpaper of the current theme in theme.conf.user of the
+# SDDM theme fdt2k-dark. /usr/share/sddm/themes/fdt2k-dark is a link to
+# ~/.local/share/sddm/themes/fdt2k-dark (install-arch-deps.sh sddm): the file
+# lands in the dotfiles, ignored by git.
 
 
 DIR=$(dirname $0)
