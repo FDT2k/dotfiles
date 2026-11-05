@@ -100,6 +100,8 @@ Preset layouts in `bin/monitor_layout/`:
 
 Core: qtile, rofi, xrandr, ImageMagick, xdotool, pamixer, pactl, hellwal, terminator
 
+`bin/install-arch-deps.sh [rofi|theme|lock]` installs the Arch packages of these groups (all by default), from the official repositories only: no AUR. hellwal is not packaged there; the script only checks that its binary is found (e.g. `bin/hellwal`). It is extended group by group, as machines are set up.
+
 ## Keybinding Conventions
 
 Defined in `qtile_config/commands.py` and `qtile_config/keybindings.py`:
