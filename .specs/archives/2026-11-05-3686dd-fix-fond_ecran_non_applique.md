@@ -1,6 +1,6 @@
 # Le fond d'écran n'est plus posé depuis le passage à hellwal
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
@@ -14,7 +14,7 @@ Les dotfiles ne posaient donc jamais le fond eux-mêmes :
 - le `feh --bg-fill` d'`.config/qtile/autostart.sh` (ligne 49) est commenté ;
 - les `Screen()` de `.config/qtile/qtile_config/screens.py` n'ont pas d'option `wallpaper`.
 
-La spec `0da46c` ([archive](../archives/2026-11-05-0da46c-change-pywal_vers_hellwal.md)) a remplacé `wal -i` par `hellwal-apply`. hellwal génère les couleurs, les templates et la recoloration des terminaux, mais **ne pose pas le fond d'écran**. La spec n'avait pas relevé ce second rôle de `wal -i`.
+La spec `0da46c` ([archive](./2026-11-05-0da46c-change-pywal_vers_hellwal.md)) a remplacé `wal -i` par `hellwal-apply`. hellwal génère les couleurs, les templates et la recoloration des terminaux, mais **ne pose pas le fond d'écran**. La spec n'avait pas relevé ce second rôle de `wal -i`.
 
 Le chemin de l'image est pourtant disponible : le template `.config/hellwal/templates/colors.json` écrit `"wallpaper": "%%wallpaper%%"` (chemin absolu, via le `realpath` de `hellwal-apply`). `.config/qtile/qtile_config/themes.py` le lit déjà, dans la variable `wallpaper`, sans s'en servir.
 
