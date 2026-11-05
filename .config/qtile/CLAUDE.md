@@ -95,7 +95,7 @@ Screen layouts are per machine, in `bin/screenlayout.d/`, named after `uname -n`
 | `autostart.sh` | Desktop initialization and daemon startup (called by the `startup` hook) |
 | `bin/run.sh` | Rofi-based application/menu launcher |
 | `bin/lock` | Screen locking (uses i3lock-multimonitor) |
-| `bin/*volume` | Audio control scripts |
+| `bin/*volume`, `bin/mutemic` | Audio control scripts (output volume and mute, microphone mute on `XF86AudioMicMute`) |
 | `bin/brightnessup`, `bin/brightnessdown` | Backlight ±5% with `brightnessctl` (laptop brightness keys), with a dunst notification |
 
 ## Dependencies

@@ -17,6 +17,7 @@ class command:
     volume_up = os.path.join(os.path.dirname(__file__), '../bin/raisevolume')
     volume_down = os.path.join(os.path.dirname(__file__), '../bin/lowervolume')
     volume_mute = os.path.join(os.path.dirname(__file__), '../bin/mutevolume')
+    mic_mute = os.path.join(os.path.dirname(__file__), '../bin/mutemic')
     brightness_up = os.path.join(os.path.dirname(__file__), '../bin/brightnessup')
     brightness_down = os.path.join(os.path.dirname(__file__), '../bin/brightnessdown')
     shoot = os.path.join(os.path.dirname(__file__), '../bin/shot.sh')
