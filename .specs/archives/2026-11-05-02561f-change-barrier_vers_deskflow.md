@@ -1,6 +1,6 @@
 # Supprimer le menu et le raccourci Barrier
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
