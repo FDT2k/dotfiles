@@ -6,14 +6,18 @@ muted="muted"
 
 pamixer --default-source -t || exit $?
 
-# The micmute LED follows the ALSA capture switch (kernel trigger
-# audio-micmute), not PipeWire: align the switch with the new state
+# The micmute LED follows the hardware ALSA capture switch (kernel trigger
+# audio-micmute), not PipeWire. The default ALSA device is PipeWire itself, so
+# set the Capture switch of every hardware card that has one (on the laptop:
+# Generic_1, the analog codec), by card id rather than by number.
 if command -v amixer >/dev/null; then
-    if [[ "$muted" == "muted" ]]; then
-        amixer -q set Capture nocap
-    else
-        amixer -q set Capture cap
-    fi
+    [[ "$muted" == "muted" ]] && state=nocap || state=cap
+    for id in /proc/asound/card*/id; do
+        [ -r "$id" ] || continue
+        card="$(cat "$id")"
+        amixer -q -c "$card" sget Capture >/dev/null 2>&1 || continue
+        amixer -q -c "$card" set Capture "$state"
+    done
 fi
 
 notify-send --hint=string:x-dunst-stack-tag:mic "microphone ${muted}"
