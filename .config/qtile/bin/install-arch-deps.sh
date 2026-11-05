@@ -1,9 +1,9 @@
 #!/bin/bash
-# Install the Arch packages for rofi, the theme/wallpaper chain (hellwal) and
-# the screen lock (i3lock-multimonitor).
+# Install the Arch packages for rofi, the theme/wallpaper chain (hellwal),
+# the screen lock (i3lock-multimonitor) and notifications (dunst).
 #
 #   install-arch-deps.sh                 # every group
-#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock
+#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst
 #
 # Official repositories only (pacman), no AUR: packages already installed are
 # skipped (--needed). hellwal is not in the official repositories: the script
@@ -21,9 +21,11 @@ THEME_PKGS=(imagemagick libnotify python)
 # bin/i3lock-multimonitor/lock (i3lock, convert, xrandr), locked on suspend
 # by xss-lock (autostart.sh)
 LOCK_PKGS=(i3lock xss-lock imagemagick xorg-xrandr)
+# Notifications: dunst, recolored by bin/theme/colorize-dunst; notify-send
+DUNST_PKGS=(dunst libnotify)
 
 groups=("$@")
-[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock)
+[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst)
 
 pkgs=()
 want_hellwal=no
@@ -32,7 +34,8 @@ for g in "${groups[@]}"; do
         rofi)  pkgs+=("${ROFI_PKGS[@]}") ;;
         theme) pkgs+=("${THEME_PKGS[@]}"); want_hellwal=yes ;;
         lock)  pkgs+=("${LOCK_PKGS[@]}") ;;
-        *)     echo "unknown group: $g (rofi, theme, lock)" >&2; exit 2 ;;
+        dunst) pkgs+=("${DUNST_PKGS[@]}") ;;
+        *)     echo "unknown group: $g (rofi, theme, lock, dunst)" >&2; exit 2 ;;
     esac
 done
 
