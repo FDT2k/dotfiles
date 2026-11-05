@@ -1,11 +1,11 @@
 # Écran de login noir sur le laptop : porter le thème SDDM fdt2k-dark en Qt 6
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
 
-Le thème SDDM `fdt2k-dark` est versionné dans `.local/share/sddm/themes/fdt2k-dark/`. C'est une copie du thème **Sugar Dark** (`metadata.desktop` : `Theme-Id=sugar-dark`, `Theme-API=2.11`), écrit pour **Qt 5**. Le groupe `sddm` d'`install-arch-deps.sh` (spec `861406`, [archive](../archives/2026-11-05-861406-feature-install_sddm.md)) :
+Le thème SDDM `fdt2k-dark` est versionné dans `.local/share/sddm/themes/fdt2k-dark/`. C'est une copie du thème **Sugar Dark** (`metadata.desktop` : `Theme-Id=sugar-dark`, `Theme-API=2.11`), écrit pour **Qt 5**. Le groupe `sddm` d'`install-arch-deps.sh` (spec `861406`, [archive](./2026-11-05-861406-feature-install_sddm.md)) :
 - le lie depuis `/usr/share/sddm/themes/fdt2k-dark` ;
 - le choisit dans `/etc/sddm.conf.d/10-dotfiles.conf` (`[Theme] Current=fdt2k-dark`).
 

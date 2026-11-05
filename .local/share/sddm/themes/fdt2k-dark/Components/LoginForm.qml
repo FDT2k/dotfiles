@@ -17,8 +17,8 @@
 // along with Sugar Dark. If not, see <https://www.gnu.org/licenses/>.
 //
 
-import QtQuick 2.11
-import QtQuick.Layouts 1.11
+import QtQuick
+import QtQuick.Layouts
 import SddmComponents 2.0 as SDDM
 
 ColumnLayout {
