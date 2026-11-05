@@ -1,6 +1,6 @@
 # Installeur git dans le script d'installation : hellwal depuis le fork FDT2k
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
