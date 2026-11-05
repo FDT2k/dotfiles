@@ -101,7 +101,7 @@ Preset layouts in `bin/monitor_layout/`:
 
 Core: qtile, rofi, xrandr, ImageMagick, xdotool, pamixer, pactl, hellwal, terminator
 
-`bin/install-arch-deps.sh [rofi|theme|lock|dunst|terminator]` installs the Arch packages of these groups (all by default), from the official repositories only: no AUR. Tools that are not packaged are built from git by `git_install` (recipes at the top of the script): cloned in `~/.local/src/<name>`, pulled, built with `make` and copied to `~/bin/<name>` on every run. hellwal comes from the fork `https://github.com/FDT2k/hellwal.git`; the script warns when another hellwal (`~/.config/qtile/bin/hellwal`, PATH) would shadow `~/bin/hellwal` for `hellwal-apply`. It is extended group by group, as machines are set up.
+`bin/install-arch-deps.sh [rofi|theme|lock|dunst|terminator|screens]` installs the Arch packages of these groups (all by default), from the official repositories only: no AUR. Tools that are not packaged are built from git by `git_install` (recipes at the top of the script): cloned in `~/.local/src/<name>`, pulled, built with `make` and copied to `~/bin/<name>` on every run. hellwal comes from the fork `https://github.com/FDT2k/hellwal.git`; the script warns when another hellwal (`~/.config/qtile/bin/hellwal`, PATH) would shadow `~/bin/hellwal` for `hellwal-apply`. It is extended group by group, as machines are set up.
 
 ## Keybinding Conventions
 
