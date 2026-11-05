@@ -1,6 +1,6 @@
 # Texte des groupes inactifs illisible dans la GroupBox de la barre Qtile
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
