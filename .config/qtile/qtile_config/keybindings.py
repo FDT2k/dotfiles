@@ -13,27 +13,27 @@ curr_screen = 0
 
 
 def set_vertical_monitor_layout(qtile):
-    qtile.cmd_spawn(command.home_screen_layout)
+    qtile.spawn(command.home_screen_layout)
 
 
 def run_prompt(qtile):
-    qtile.cmd_spawn(command.run)
+    qtile.spawn(command.run)
 
 
 def set_horizontal_monitor_layout(qtile):
-    qtile.cmd_spawn(command.work_screen_layout)
+    qtile.spawn(command.work_screen_layout)
 
 
 def set_samsung_monitor_layout(qtile):
-    qtile.cmd_spawn(command.samsung_screen_layout)
+    qtile.spawn(command.samsung_screen_layout)
 
 
 def set_samsung_monitor_dual_layout(qtile):
-    qtile.cmd_spawn(command.samsung_screen_dual_layout)
+    qtile.spawn(command.samsung_screen_dual_layout)
 
 
 def pick_theme(qtile):
-    qtile.cmd_spawn(command.theme + ' ' + wsp['current'])
+    qtile.spawn(command.theme + ' ' + wsp['current'])
 
 
 def toggle_screen_focus(qtile):
@@ -48,9 +48,9 @@ def toggle_screen_focus(qtile):
     else:
         curr_screen = 0
 
-    qtile.cmd_spawn(
+    qtile.spawn(
         "notify-send --hint=string:x-dunst-stack-tag:screenfocus  \"focused %s screen \"" % screen_name)
-    qtile.cmd_to_screen(curr_screen)
+    qtile.to_screen(curr_screen)
     move_cursor(curr_screen)
 
 

@@ -109,3 +109,4 @@ Defined in `qtile_config/commands.py` and `qtile_config/keybindings.py`:
 - Room switching: mod4 + a/s/d/y/x/c (defined in `workspaces.py`)
 - Layout control: mod4 + various keys
 - Mouse bindings: mod4 + mouse buttons (defined in `keybindings.py`)
+- Call `qtile` object commands without the old `cmd_` prefix (`qtile.spawn`, `qtile.to_screen`, `qtile.restart`): the `cmd_*` aliases are gone in qtile 0.37, the unprefixed names work on 0.34 and 0.37

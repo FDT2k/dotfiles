@@ -10,11 +10,6 @@ from libqtile.log_utils import logger
 from .workspaces import wsp, get_group_name
 
 
-@hook.subscribe.screen_change
-def screen_change():
-    qtile.cmd_restart()
-
-
 @hook.subscribe.client_new
 def agroup(client):
     # 1) Check si qlaunch a demandé un groupe spécifique
