@@ -70,6 +70,7 @@ The `bin/` directory uses a `.d` directory pattern for pluggable menus:
 
 - hellwal generates themes from the templates in `~/.config/hellwal/templates/` (versioned in this repo under `.config/hellwal/templates/`) into `~/.cache/wal/`, in pywal's file formats (`colors.json`, `colors.sh`, `colors`, `colors-rofi-dark.rasi`) plus `terminal.sh`
 - `bin/theme/hellwal-apply <image>` is the only hellwal call (appearance options such as `--comfort-mode` live there); it also pushes `terminal.sh` to every open `/dev/pts/*`. It finds the hellwal binary in `PATH`, then `~/.config/qtile/bin/hellwal`, `~/bin`, `~/.local/bin` (Qtile does not read `.zshrc`); the binary is not versioned (`bin/hellwal` is in `.gitignore`)
+- The wallpaper is set by Qtile, not by hellwal: `screens.py` passes the `wallpaper` path of `colors.json` to every `Screen` (`wallpaper_mode='fill'`); no wallpaper if the image is missing
 - If `colors.json` is missing, unreadable or lacks 16 `#rrggbb` colors, `themes.py` falls back to `DEFAULT_COLORS` and logs a warning: Qtile still starts. Run `bin/theme/hellwal-apply <image>` to get the real theme
 - `bin/theme/` scripts apply colors to various components:
   - `pick` - Theme selector (calls `hellwal-apply`)

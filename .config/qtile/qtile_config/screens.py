@@ -1,11 +1,20 @@
 # screens.py - Screen and bar configurations
 
+import os
+
 from libqtile.config import Screen
 from libqtile import bar, widget
 
-from .themes import theme, theme_neg
+from .themes import theme, theme_neg, wallpaper
 from .layouts import FONT_SIZE
 from .workspaces import wsp, get_workspace_groups
+
+# Wallpaper: hellwal does not set it (pywal's `wal -i` did), so Qtile does,
+# from the image recorded in colors.json. Missing image: no wallpaper.
+if wallpaper and os.path.isfile(wallpaper):
+    wallpaper_args = {'wallpaper': wallpaper, 'wallpaper_mode': 'fill'}
+else:
+    wallpaper_args = {}
 
 screens = [
 
@@ -90,9 +99,10 @@ screens = [
             background=theme.bg,
             margin=[10, 10, 0, 10],
         ),
+        **wallpaper_args,
     ),
-    Screen(),
+    Screen(**wallpaper_args),
 
-    Screen(),
-    Screen(),
+    Screen(**wallpaper_args),
+    Screen(**wallpaper_args),
 ]
