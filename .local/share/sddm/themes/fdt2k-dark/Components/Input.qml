@@ -173,6 +173,8 @@ Column {
             height: root.font.pointSize * 3
             width: parent.width
             placeholderText: config.TranslateUsernamePlaceholder || textConstants.userName
+            // Qt 6: the default placeholder color is the style's dark gray
+            placeholderTextColor: Qt.rgba(root.palette.text.r, root.palette.text.g, root.palette.text.b, 0.6)
             selectByMouse: true
             horizontalAlignment: TextInput.AlignHCenter
             renderType: Text.QtRendering
@@ -220,6 +222,7 @@ Column {
             selectByMouse: true
             echoMode: revealSecret.checked ? TextInput.Normal : TextInput.Password
             placeholderText: config.TranslatePasswordPlaceholder || textConstants.password
+            placeholderTextColor: Qt.rgba(root.palette.text.r, root.palette.text.g, root.palette.text.b, 0.6)
             horizontalAlignment: TextInput.AlignHCenter
             passwordCharacter: "•"
             passwordMaskDelay: config.ForceHideCompletePassword == "true" ? undefined : 1000
@@ -455,7 +458,8 @@ Column {
 
             contentItem: Text {
                 text: parent.text
-                color: "#444"
+                // Disabled: drawn on the dark background, so in the main color
+                color: root.palette.text
                 font.pointSize: root.font.pointSize
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -522,6 +526,7 @@ Column {
                     PropertyChanges {
                         target: loginButton.contentItem;
                         opacity: 1
+                        color: "#444"
                     }
                 }
             ]
