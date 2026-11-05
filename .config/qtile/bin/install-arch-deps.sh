@@ -52,8 +52,9 @@ SDDM_THEME=fdt2k-dark
 # (curl, unzip), release information read with python
 ACTIVITYWATCH_PKGS=(curl unzip python)
 # Sound: PipeWire with its PulseAudio server (pamixer and pactl in bin/*volume
-# and the sound menu need it), pavucontrol for the scratchpad mixer
-SOUND_PKGS=(pipewire pipewire-pulse wireplumber pamixer pavucontrol)
+# and the sound menu need it), pavucontrol for the scratchpad mixer,
+# alsa-utils (amixer) for the micmute LED in bin/mutemic
+SOUND_PKGS=(pipewire pipewire-pulse wireplumber pamixer pavucontrol alsa-utils)
 # User services of the sound group, enabled and started by the script
 SOUND_UNITS=(pipewire.socket pipewire-pulse.socket wireplumber.service)
 

@@ -4,4 +4,16 @@ muted="muted"
 
 [[ "$(pamixer --default-source --get-mute)" == "true" ]] && muted="unmuted"
 
-pamixer --default-source -t && notify-send --hint=string:x-dunst-stack-tag:mic "microphone ${muted}"
+pamixer --default-source -t || exit $?
+
+# The micmute LED follows the ALSA capture switch (kernel trigger
+# audio-micmute), not PipeWire: align the switch with the new state
+if command -v amixer >/dev/null; then
+    if [[ "$muted" == "muted" ]]; then
+        amixer -q set Capture nocap
+    else
+        amixer -q set Capture cap
+    fi
+fi
+
+notify-send --hint=string:x-dunst-stack-tag:mic "microphone ${muted}"
