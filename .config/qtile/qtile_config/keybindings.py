@@ -97,6 +97,8 @@ keys = [
     Key([], "XF86AudioLowerVolume", lazy.spawn(command.volume_down)),
     Key([], "XF86AudioRaiseVolume", lazy.spawn(command.volume_up)),
     Key([], "XF86AudioMute", lazy.spawn(command.volume_mute)),
+    Key([], "XF86MonBrightnessUp", lazy.spawn(command.brightness_up)),
+    Key([], "XF86MonBrightnessDown", lazy.spawn(command.brightness_down)),
     Key([], 'Print', lazy.spawn(command.shoot)),
     Key([shft], 'Print', lazy.spawn(command.record)),
 ]

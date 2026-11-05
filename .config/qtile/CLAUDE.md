@@ -96,6 +96,7 @@ Screen layouts are per machine, in `bin/screenlayout.d/`, named after `uname -n`
 | `bin/run.sh` | Rofi-based application/menu launcher |
 | `bin/lock` | Screen locking (uses i3lock-multimonitor) |
 | `bin/*volume` | Audio control scripts |
+| `bin/brightnessup`, `bin/brightnessdown` | Backlight ±5% with `brightnessctl` (laptop brightness keys), with a dunst notification |
 
 ## Dependencies
 

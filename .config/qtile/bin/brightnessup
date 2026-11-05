@@ -1,0 +1,3 @@
+#!/bin/bash
+
+brightnessctl -q set +5% && notify-send --hint=string:x-dunst-stack-tag:brightness "brightness up $(brightnessctl -m | cut -d, -f4)"
