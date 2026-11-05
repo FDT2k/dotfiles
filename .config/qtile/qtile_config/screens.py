@@ -56,7 +56,7 @@ screens = [
                 widget.WindowName(padding=0),
                 widget.TextBox(
                     font="Arial",
-                    foreground="#CACACA",
+                    foreground=theme_neg.bg,
                     text="◢",
                     fontsize=(FONT_SIZE*5.25),
                     padding=-1
@@ -64,28 +64,30 @@ screens = [
                 widget.NetGraph(
                     bandwidth_type="up",
                     type="linefill",
-                    background="#CACACA",
+                    graph_color=theme_neg.fg,
+                    border_color=theme_neg.fg,
+                    background=theme_neg.bg,
                     line_width=1
                 ),
                 widget.CPUGraph(
                     type="box",
-                    graph_color=theme.bg_active,
-                    border_color=theme.bg_active,
-                    background="#CACACA",
+                    graph_color=theme_neg.fg,
+                    border_color=theme_neg.fg,
+                    background=theme_neg.bg,
                     border_width=2,
                     line_width=1
                 ),
                 widget.MemoryGraph(
                     type="box",
-                    graph_color=theme.bg_active,
-                    border_color=theme.bg_active,
-                    background="#CACACA",
+                    graph_color=theme_neg.fg,
+                    border_color=theme_neg.fg,
+                    background=theme_neg.bg,
                     border_width=2,
                     line_width=1
                 ),
                 widget.TextBox(
                     font="Arial",
-                    foreground="#CACACA",
+                    foreground=theme_neg.bg,
                     text="◤ ",
                     fontsize=(FONT_SIZE*5.25),
                     padding=-1

@@ -1,12 +1,12 @@
 # Bizarreries de couleurs dans la barre Qtile : bloc gris fixe, graphes, bordures flottantes
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
 
 La barre du premier écran (`.config/qtile/qtile_config/screens.py`) a deux **blocs colorés**, chacun encadré de flèches `◢` / `◤` :
-- **à gauche**, les rooms : `GroupBox` sur `theme_neg.bg` (`color2`), texte `color0`, rooms vides calculées par `readable_dim` (spec `75eeed`, [archive](../archives/2026-11-05-75eeed-fix-groupbox_inactif_illisible.md)) ;
+- **à gauche**, les rooms : `GroupBox` sur `theme_neg.bg` (`color2`), texte `color0`, rooms vides calculées par `readable_dim` (spec `75eeed`, [archive](./2026-11-05-75eeed-fix-groupbox_inactif_illisible.md)) ;
 - **à droite**, les graphes `NetGraph`, `CPUGraph`, `MemoryGraph` : fond et flèches en **gris fixe `#CACACA`**, qui ne suit pas le thème. `CPUGraph` et `MemoryGraph` tracent en `theme.bg_active` (`color1`). `NetGraph` n'a ni `graph_color` ni `border_color` : il garde les couleurs par défaut de Qtile.
 
 Les couleurs viennent de `.config/qtile/qtile_config/themes.py`. hellwal tourne en `--comfort-mode`, qui garantit le contraste de chaque couleur contre `color0` : au moins 5.2:1 pour `color1`–`6`, 7.2:1 pour `color7`/`15`.

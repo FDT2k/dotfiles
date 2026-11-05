@@ -42,7 +42,7 @@ floating_layout = layout.Floating(float_rules=[
     Match(wm_class='blueman-manager'),
     Match(func=lambda c: c.has_fixed_size()),
     Match(func=lambda c: c.has_fixed_ratio())
-], border_normal=theme.fg, border_focus=theme.bg, border_width=4)
+], border_normal=theme.bg, border_focus=theme.bg_active, border_width=4)
 
 auto_fullscreen = True
 focus_on_window_activation = "smart"
