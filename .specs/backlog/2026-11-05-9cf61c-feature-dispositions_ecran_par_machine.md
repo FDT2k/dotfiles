@@ -58,11 +58,11 @@ Règles :
 3. **`screenlayout.d/sddm`** : le lien vers `daoloth.sh` est remplacé par un **script** exécutable `#!/bin/sh` qui lance `../screenlayout --default`. Le chemin est résolu depuis l'emplacement réel du script (`readlink -f "$0"`). Le chemin vu par SDDM ne change donc pas, et chaque machine applique sa propre disposition par défaut.
 4. **`autostart.sh`** lance `$DIR/bin/screenlayout --default`, en premier et de façon synchrone (pas de `&`), avant `bin/theme/reload`, pour que le fond d'écran soit posé sur les bons écrans.
 5. **`commands.py`** : `screen_layout` pointe vers `../bin/screenlayout`. Le raccourci `mod+alt+l` ne change pas.
-6. `daoloth.sh` reste tel quel : c'est déjà `{hostname}.sh` pour le fixe. Aucune disposition n'est inventée pour abhoth. L'humain l'ajoutera, par exemple avec arandr (« Enregistrer sous… » `abhoth.sh` ou `abhoth_{nom}.sh` dans `screenlayout.d/`).
+6. `daoloth.sh` et `abhoth.sh` (écran interne `eDP-1` en 1920x1200, ajouté par l'humain) restent tels quels : ce sont déjà les `{hostname}.sh` des deux machines. Les variantes s'ajoutent par exemple avec arandr (« Enregistrer sous… » `{hostname}_{nom}.sh` dans `screenlayout.d/`).
 
 ### Parcours utilisateur
 
-1. Au démarrage, SDDM lance `screenlayout.d/sddm`, donc `{hostname}.sh` (daoloth : `daoloth.sh` ; abhoth : rien tant que `abhoth.sh` n'existe pas).
+1. Au démarrage, SDDM lance `screenlayout.d/sddm`, donc `{hostname}.sh` (daoloth : `daoloth.sh` ; abhoth : `abhoth.sh`).
 2. À l'ouverture de la session, `autostart.sh` relance `{hostname}.sh`.
 3. L'humain branche un écran portable, tape `mod+alt+l` et choisit, par exemple, `portable` : `daoloth_portable.sh` s'exécute. Qtile reconfigure ses écrans de lui-même.
 4. Il peut revenir à `default`, ou ouvrir `arandr` pour créer une nouvelle variante.
@@ -71,7 +71,7 @@ Règles :
 
 | Situation | Comportement attendu |
 |-----------|---------------------|
-| Machine sans `{hostname}.sh` (abhoth aujourd'hui) | menu sans `default` (variantes éventuelles + `arandr`) ; `--default`, SDDM et autostart ne font rien, sans erreur |
+| Machine sans `{hostname}.sh` (machine inconnue) | menu sans `default` (variantes éventuelles + `arandr`) ; `--default`, SDDM et autostart ne font rien, sans erreur |
 | Fichier `{hostname}_{nom}.sh` non exécutable | non listé |
 | Hostname contenant `_` | hors périmètre : daoloth et abhoth n'en ont pas |
 | Fichiers d'une autre machine (`abhoth*.sh` sur daoloth) | jamais listés ni lancés |
@@ -119,7 +119,7 @@ Sans objet.
 - Ne pas modifier le contenu xrandr de `daoloth.sh`.
 - Ne pas modifier `bin/run.sh` : les autres menus `.d` l'utilisent toujours.
 - Le chemin `screenlayout.d/sddm` vu par SDDM ne change pas (aucune intervention sur `/etc/sddm.conf.d/`).
-- Ne créer aucune disposition pour abhoth.
+- Ne modifier ni `daoloth.sh` ni `abhoth.sh` ; ne créer aucune variante.
 - `hostname` n'est jamais appelé : `uname -n` seulement.
 
 ## Tests
@@ -134,10 +134,11 @@ Le dépôt n'a pas de suite de tests (`## Tests` du `CLAUDE.md`). Les cas se jou
 | Choix `default` / `arandr` | `daoloth.sh` / `arandr` exécuté |
 | Menu annulé (rofi renvoie vide) | rien exécuté, code 0 |
 | `screenlayout --default` sur daoloth | `daoloth.sh` exécuté, sans rofi |
-| Faux `uname -n` = `abhoth`, sans `abhoth.sh` | `--default` : rien, code 0 ; menu : `arandr` seul (plus les variantes `abhoth_*` si présentes) |
+| Faux `uname -n` = `abhoth` | menu : `default`, `arandr` (plus les variantes `abhoth_*` si présentes) ; `--default` lance `abhoth.sh` |
+| Faux `uname -n` = `inconnu`, sans `inconnu.sh` | `--default` : rien, code 0 ; menu : `arandr` seul |
 | `daoloth_x.sh` non exécutable | non listé |
 | `screenlayout.d/sddm` lancé depuis un autre dossier courant | exécute `screenlayout --default` (chemin résolu par `readlink -f`) |
 | `git ls-files -s .config/qtile/bin/screenlayout.d/sddm` | mode `100755` (script), plus `120000` |
 | `autostart.sh` | `screenlayout --default` appelé avant `theme/reload` |
 | Fixe — `mod+alt+l` | menu `default` + `arandr` (et les variantes ajoutées) |
-| Laptop — démarrage sans `abhoth.sh` | rien de cassé ; après ajout de `abhoth.sh`, appliqué au login et à l'ouverture de session |
+| Laptop — démarrage | `abhoth.sh` appliqué au login et à l'ouverture de session |
