@@ -378,3 +378,5 @@ relancer ; une seule à la fois ; un réveil pendant un travail se traite à la 
 courrier ne se veille pas : c'est l'humain qui le lit.
 
 Quand le mod `forest-reseau-demarrage` est installé, c'est lui qui veille la boîte et lance le relevé à l'arrivée d'un message ; la veille Bash n'est alors pas lancée.
+
+<!-- forest-claude-sync: 43b205a13aba96cc805820ee0397b42c0da66ef43cdaec2cdc9f635d4cee3469 -->
