@@ -8,23 +8,17 @@ Linux desktop environment configuration system centered around **Qtile window ma
 
 ## Setup
 
+This directory is part of the dotfiles repo (bare repo with `$HOME` as work tree, see the root `CLAUDE.md`): files are already in place at `~/.config/qtile/`, no symlink or generation step. `config.py` is versioned and only contains `from qtile_config import *`.
+
 ```bash
-
-# Symlink qtile_config package to Qtile config directory
-ln -sf $(pwd)/qtile_config ~/.config/qtile/qtile_config
-
-# Create config.py that imports the package
-echo "from qtile_config import *" > ~/.config/qtile/config.py
-
-# Initialize desktop environment
-./autostart.sh
+# Verify syntax
+python3 -m py_compile qtile_config/*.py
 
 # Restart Qtile after config changes
 qtile cmd-obj -o cmd -f restart
-
-# Verify syntax
-python3 -m py_compile qtile_config/__init__.py
 ```
+
+`autostart.sh` is run automatically at Qtile startup by the `startup` hook in `hooks.py` (hard-coded path `~/.config/qtile/autostart.sh`).
 
 ## Architecture
 
@@ -36,7 +30,7 @@ Modular Python package structure:
 |--------|---------|
 | `__init__.py` | Entry point - exports Qtile variables, floating_layout, config |
 | `themes.py` | Pywal colors integration, `theme` and `theme_neg` classes |
-| `commands.py` | Key modifiers (`mod`, `alt`, `ctrl`, `shft`) + script paths |
+| `commands.py` | Key modifiers (`mod`, `alt`, `ctrl`, `shft`) + script paths (`command.*`, resolved relative to the package as `../bin/...`; `command.autostart` points to a non-existent `bin/autostart` and is unused) |
 | `workspaces.py` | Workspaces, rooms, groups, ScratchPad, `workspace_keys` |
 | `layouts.py` | Layout definitions (Max, Bsp, TreeTab), widget_defaults |
 | `keybindings.py` | All key and mouse bindings |
@@ -92,8 +86,9 @@ Preset layouts in `bin/monitor_layout/`:
 | File | Purpose |
 |------|---------|
 | `qtile_config/` | Modular Qtile configuration package (see Architecture) |
-| `fdt2k.config.py` | Legacy monolithic config (deprecated, kept for reference) |
-| `autostart.sh` | Desktop initialization and daemon startup |
+| `config.py` | Qtile entry point, one line: `from qtile_config import *` |
+| `fdt2k.config.py` | Identical one-line copy of `config.py` (not a legacy monolithic config) |
+| `autostart.sh` | Desktop initialization and daemon startup (called by the `startup` hook) |
 | `bin/run.sh` | Rofi-based application/menu launcher |
 | `bin/lock` | Screen locking (uses i3lock-multimonitor) |
 | `bin/*volume` | Audio control scripts |
