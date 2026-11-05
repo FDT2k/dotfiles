@@ -5,7 +5,7 @@
 # fonts; the group sddm (never installed by default) also configures SDDM.
 #
 #   install-arch-deps.sh                 # every group
-#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch
+#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sound
 #   install-arch-deps.sh sddm            # SDDM, its config and the fdt2k-dark theme (not in the default groups)
 #
 # Official repositories only (pacman), no AUR: packages already installed are
@@ -51,6 +51,11 @@ SDDM_THEME=fdt2k-dark
 # Activity tracker started by autostart.sh: release archive from GitHub
 # (curl, unzip), release information read with python
 ACTIVITYWATCH_PKGS=(curl unzip python)
+# Sound: PipeWire with its PulseAudio server (pamixer and pactl in bin/*volume
+# and the sound menu need it), pavucontrol for the scratchpad mixer
+SOUND_PKGS=(pipewire pipewire-pulse wireplumber pamixer pavucontrol)
+# User services of the sound group, enabled and started by the script
+SOUND_UNITS=(pipewire.socket pipewire-pulse.socket wireplumber.service)
 
 # Git recipes: name, repository, binary built by make (relative to the repo)
 HELLWAL_GIT=(hellwal https://github.com/FDT2k/hellwal.git hellwal)
@@ -228,12 +233,13 @@ setup_sddm() {
 }
 
 groups=("$@")
-[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst terminator screens fonts activitywatch)
+[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst terminator screens fonts activitywatch sound)
 
 pkgs=()
 want_hellwal=no
 want_sddm=no
 want_activitywatch=no
+want_sound=no
 for g in "${groups[@]}"; do
     case "$g" in
         rofi)  pkgs+=("${ROFI_PKGS[@]}") ;;
@@ -244,8 +250,9 @@ for g in "${groups[@]}"; do
         screens) pkgs+=("${SCREENS_PKGS[@]}") ;;
         fonts) pkgs+=("${FONTS_PKGS[@]}") ;;
         activitywatch) pkgs+=("${ACTIVITYWATCH_PKGS[@]}"); want_activitywatch=yes ;;
+        sound) pkgs+=("${SOUND_PKGS[@]}"); want_sound=yes ;;
         sddm)  pkgs+=("${SDDM_PKGS[@]}"); want_sddm=yes ;;
-        *)     echo "unknown group: $g (rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sddm)" >&2; exit 2 ;;
+        *)     echo "unknown group: $g (rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sound, sddm)" >&2; exit 2 ;;
     esac
 done
 
@@ -262,6 +269,12 @@ fi
 
 if [ "$want_activitywatch" = yes ]; then
     release_install "${ACTIVITYWATCH_RELEASE[@]}"
+fi
+
+if [ "$want_sound" = yes ]; then
+    # pamixer gets "Connection error" while pipewire-pulse is not running
+    echo "==> sound: enabling user services ${SOUND_UNITS[*]}"
+    systemctl --user enable --now "${SOUND_UNITS[@]}"
 fi
 
 if [ "$want_sddm" = yes ]; then
