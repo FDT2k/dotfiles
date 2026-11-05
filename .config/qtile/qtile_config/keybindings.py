@@ -1,6 +1,5 @@
 # keybindings.py - Key and mouse bindings
 
-import subprocess
 
 from libqtile.config import Key, Drag, Click
 from libqtile.lazy import lazy
@@ -8,63 +7,13 @@ from libqtile.lazy import lazy
 from .commands import mod, alt, ctrl, shft, command
 from .workspaces import wsp, workspace_keys
 
-# Current screen for toggle
-curr_screen = 0
-
-
-def set_vertical_monitor_layout(qtile):
-    qtile.spawn(command.home_screen_layout)
-
 
 def run_prompt(qtile):
     qtile.spawn(command.run)
 
 
-def set_horizontal_monitor_layout(qtile):
-    qtile.spawn(command.work_screen_layout)
-
-
-def set_samsung_monitor_layout(qtile):
-    qtile.spawn(command.samsung_screen_layout)
-
-
-def set_samsung_monitor_dual_layout(qtile):
-    qtile.spawn(command.samsung_screen_dual_layout)
-
-
 def pick_theme(qtile):
     qtile.spawn(command.theme + ' ' + wsp['current'])
-
-
-def toggle_screen_focus(qtile):
-    global curr_screen
-    screen_name = "middle"
-    if curr_screen == 0:
-        curr_screen = 1
-        screen_name = "right"
-    elif curr_screen == 1:
-        curr_screen = 2
-        screen_name = "left"
-    else:
-        curr_screen = 0
-
-    qtile.spawn(
-        "notify-send --hint=string:x-dunst-stack-tag:screenfocus  \"focused %s screen \"" % screen_name)
-    qtile.to_screen(curr_screen)
-    move_cursor(curr_screen)
-
-
-def move_cursor(arg):
-    screeninfo = [
-        s for s in subprocess.check_output("xrandr").decode("utf-8").split()
-        if s.count("+") == 2
-    ]
-    match = screeninfo[arg]
-    data = [item.split("x") for item in match.split("+")]
-    numbers = [int(n) for n in [item for sublist in data for item in sublist]]
-    coord = [str(int(n))
-             for n in [(numbers[0]/2)+numbers[2], (numbers[1]/2)+numbers[3]]]
-    subprocess.Popen(["xdotool", "mousemove", coord[0], coord[1]])
 
 
 @lazy.function
@@ -110,7 +59,6 @@ keys = [
     Key([mod, shft], "n", lazy.layout.normalize()),
 
     # screen focus
-    Key([mod], "q", lazy.function(toggle_screen_focus)),
     Key([mod,shft], "f", toggle_center()),
     # Computer control
     Key([mod, ctrl], "r", lazy.restart()),
@@ -141,9 +89,6 @@ keys = [
     Key([mod, alt], "l", lazy.spawn(command.screen_layout)),
 
     # screens options
-    Key([mod, alt], "2", lazy.spawn(command.middle_screen_brightness)),
-    Key([mod, alt], "3", lazy.spawn(command.right_screen_brightness)),
-    Key([mod, alt], "1", lazy.spawn(command.left_screen_brightness)),
 
     Key([mod, alt], "c", lazy.spawn(command.copyq)),
 

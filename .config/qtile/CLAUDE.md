@@ -80,9 +80,10 @@ The `bin/` directory uses a `.d` directory pattern for pluggable menus:
 
 ### Monitor Configuration
 
-Preset layouts in `bin/monitor_layout/`:
-- `home-layout.sh`, `vertical_layout.sh`
-- `samsung-uwide-*.sh` - Ultrawide configurations
+Screen layouts live in `bin/screenlayout.d/`, listed by the "Monitor Layout" menu (`mod+alt+l`, `bin/run.sh screenlayout.d`):
+- `daoloth.sh` - desktop (daoloth) layout, `abhoth.sh` - laptop (abhoth) layout
+- `sddm` - link to `daoloth.sh`, run by SDDM before the login screen: do not rename it
+- `arandr` - opens the graphical layout editor
 
 ## Key Files
 
@@ -95,11 +96,10 @@ Preset layouts in `bin/monitor_layout/`:
 | `bin/run.sh` | Rofi-based application/menu launcher |
 | `bin/lock` | Screen locking (uses i3lock-multimonitor) |
 | `bin/*volume` | Audio control scripts |
-| `bin/brightness.sh` | Monitor brightness |
 
 ## Dependencies
 
-Core: qtile, rofi, xrandr, ImageMagick, xdotool, pamixer, pactl, hellwal, terminator
+Core: qtile, rofi, xrandr, ImageMagick, pamixer, pactl, hellwal, terminator
 
 `bin/install-arch-deps.sh [rofi|theme|lock|dunst|terminator|screens|fonts]` installs the Arch packages of these groups (all by default), from the official repositories only: no AUR. Tools that are not packaged are built from git by `git_install` (recipes at the top of the script): cloned in `~/.local/src/<name>`, pulled, built with `make` and copied to `~/bin/<name>` on every run. hellwal comes from the fork `https://github.com/FDT2k/hellwal.git`; the script warns when another hellwal (`~/.config/qtile/bin/hellwal`, PATH) would shadow `~/bin/hellwal` for `hellwal-apply`. It is extended group by group, as machines are set up.
 
