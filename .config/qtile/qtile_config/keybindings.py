@@ -79,7 +79,6 @@ keys = [
     Key([mod, ctrl], "p", lazy.spawn(command.power)),
     Key([mod], "b", lazy.spawn(command.bluetooth)),
     Key([mod], "n", lazy.spawn(command.network)),
-    Key([mod, alt], "b", lazy.spawn(command.barrier)),
     Key([mod, alt], "t", lazy.function(pick_theme)),
     Key([mod, alt], "v", lazy.spawn(command.virt)),
     Key([mod], "p", lazy.spawn(command.worklayout)),

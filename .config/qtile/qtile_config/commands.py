@@ -27,8 +27,6 @@ class command:
     run = os.path.join(os.path.dirname(__file__), '../bin/run')
     pacman = os.path.join(os.path.dirname(__file__),
                           '../bin/run.sh pacman.d Pacman')
-    barrier = os.path.join(os.path.dirname(__file__),
-                           '../bin/run.sh barrier.d Barrier')
     power = os.path.join(os.path.dirname(__file__), '../bin/run.sh power.d Power')
     virt = os.path.join(os.path.dirname(__file__), '../bin/run.sh osx.d Virt')
     worklayout = os.path.join(os.path.dirname(__file__), '../bin/run.sh worklayout.d WorkLayout')
