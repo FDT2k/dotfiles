@@ -1,0 +1,22 @@
+#!/bin/bash
+# Generate the theme from an image with hellwal, then recolor open terminals.
+# The only place hellwal is called: appearance options live here, so that
+# pick and reload always pass the same ones (hellwal caches the palette per
+# image + options). Templates: ~/.config/hellwal/templates/ (pywal-compatible).
+
+if [ -z "$1" ]; then
+    echo "usage: $(basename "$0") <image>" >&2
+    exit 2
+fi
+
+hellwal -i "$(realpath "$1")" -o "$HOME/.cache/wal" --comfort-mode --skip-term-colors -q || exit $?
+
+TERMINAL_SH="$HOME/.cache/wal/terminal.sh"
+[ -f "$TERMINAL_SH" ] || exit 0
+
+for pts in /dev/pts/[0-9]*; do
+    [ -w "$pts" ] || continue
+    { sh "$TERMINAL_SH" > "$pts"; } 2>/dev/null || true
+done
+
+exit 0

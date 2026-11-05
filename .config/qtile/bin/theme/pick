@@ -23,7 +23,7 @@ ln -s ~/.cache/wal/current-theme.jpg ~/.config/qtile/bin/i3lock-multimonitor/img
 rm  ~/.cache/wal/.theme-$STR.jpg
 ln -s  $FOLDER/$choice ~/.cache/wal/.theme-$STR.jpg
 
-wal -i $FOLDER/$choice
+$DIR/hellwal-apply "$FOLDER/$choice"
 
 qtile cmd-obj -o cmd -f restart
 

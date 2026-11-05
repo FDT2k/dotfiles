@@ -32,12 +32,12 @@ bash -n <script>  /  zsh -n .zshrc                      # syntaxe shell
 qtile cmd-obj -o cmd -f restart                         # appliquer (machine réelle uniquement)
 ```
 
-Note : `qtile_config/themes.py` lit `~/.cache/wal/colors.json` à l'import ; sans pywal, l'import échoue (le `py_compile` reste possible).
+Note : `qtile_config/themes.py` lit `~/.cache/wal/colors.json` à l'import ; sans ce fichier, l'import échoue (le `py_compile` reste possible). Sur un poste neuf, lancer `.config/qtile/bin/theme/hellwal-apply <image>` une fois avant de redémarrer Qtile.
 
 ## Architecture
 
 ### Shell (`.zshrc`, `.shell/`)
-- `.zshrc` : oh-my-zsh avec le thème maison `fdt2k` (source : `.config/fdt2k.zsh-theme`), nvm, fzf, pywal (`wal --vte -Rq`), puis source les modules de `.shell/`.
+- `.zshrc` : oh-my-zsh avec le thème maison `fdt2k` (source : `.config/fdt2k.zsh-theme`), nvm, fzf, recoloration du terminal (`sh ~/.cache/wal/terminal.sh`), puis source les modules de `.shell/`.
 - `.shell/php.sh` : wrappers PHP/Composer via Docker (`registry.gitlab.com/karsegard/docker-infomaniak:<version>-<debian>`), générés par `_docker_php_run version cmd composer_file`. Familles de fonctions `c2_<ver>[_dev|_prod|_agent|_all]` sélectionnant `composer.json` / `composer.dev.json` / `composer.prod.json` / `composer.agents.json`. Le workspace monté en lecture seule est `$PHP_WORKSPACE` ou `$KDA_WORK`. Les anciens alias `php-8.x` / `composer2-php8.x-*` de `.zshrc` sont l'ancienne génération de ce mécanisme.
 - `.shell/ai-core.sh` : variables d'environnement des agents (`AICORE_*`, `AGENT_MCP_RULES_PATH`).
 - `bin/rocket` : wrapper façon Laravel Sail autour de `docker compose` (fichiers `ROCKET_FILES` séparés par `:`, défaut `rocket.yml` ; env depuis `.env.$APP_ENV`, `.env.rocket` ou `.env`).
@@ -47,7 +47,7 @@ Documentation détaillée dans `.config/qtile/CLAUDE.md`. Points structurants :
 - `config.py` se réduit à `from qtile_config import *` ; la config réelle est le package `qtile_config/` (themes/commands → workspaces/layouts/hooks → keybindings/screens → `__init__`).
 - `qtile_config/commands.py` centralise les chemins des scripts, tous résolus relativement au package (`../bin/...`). Ajouter un raccourci vers un script = l'enregistrer dans `commands.py` puis le binder dans `keybindings.py`.
 - **Menus `.d`** : `bin/run.sh <dossier>.d "<Prompt>"` liste les fichiers du dossier dans rofi et exécute celui choisi (avec `bin/` dans le `PATH`). Ajouter une entrée de menu = déposer un script dans le dossier `.d` concerné, sans toucher au Python.
-- Thème : pywal → `~/.cache/wal/colors.json`, consommé par Qtile (`themes.py`), rofi (`.config/rofi/colors/pywal.rasi`) et les scripts `bin/theme/`.
+- Thème : **hellwal** (pywal n'est plus utilisé). Les templates versionnés dans `.config/hellwal/templates/` (dossier lu par défaut par hellwal) produisent dans `~/.cache/wal/` des fichiers **au format pywal** — `colors.json`, `colors.sh`, `colors`, `colors-rofi-dark.rasi` — plus `terminal.sh`. Les consommateurs — Qtile (`themes.py`), rofi (`.config/rofi/colors/pywal.rasi`), dunst, SDDM, K70 — lisent donc les mêmes chemins qu'avec pywal : modifier un format = modifier son template. Le seul appel à hellwal est `.config/qtile/bin/theme/hellwal-apply` (options d'apparence, dont `--comfort-mode`, uniquement là) ; `pick` et `reload` passent par lui. hellwal écrit les couleurs sans `#` : chaque template l'ajoute (`#%%colorN.hex%%`).
 
 ### Divers
 - `.config/rofi/` : launcher et powermenu (styles `type-1`).

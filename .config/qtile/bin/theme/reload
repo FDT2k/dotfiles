@@ -3,7 +3,21 @@
 
 DIR=$(dirname $0)
 
-wal --vte -R
+COLORS_JSON="$HOME/.cache/wal/colors.json"
+
+if [ ! -f "$COLORS_JSON" ]; then
+    echo "reload: $COLORS_JSON not found — run $DIR/hellwal-apply <image> first" >&2
+    exit 1
+fi
+
+WALLPAPER=$(python3 -c 'import json, sys; print(json.load(open(sys.argv[1]))["wallpaper"])' "$COLORS_JSON") || exit 1
+
+if [ ! -f "$WALLPAPER" ]; then
+    echo "reload: wallpaper '$WALLPAPER' not found" >&2
+    exit 1
+fi
+
+$DIR/hellwal-apply "$WALLPAPER" || exit 1
 
 $DIR/colorize-dunst &
 $DIR/colorize-k70 &

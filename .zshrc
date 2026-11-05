@@ -146,7 +146,7 @@ gu() {
 }
 
 #apply color theme
-wal --vte -Rq
+[ -f ~/.cache/wal/terminal.sh ] && sh ~/.cache/wal/terminal.sh
 EDITOR=ox
 source $HOME/.shell-keys/keys
 source $HOME/.shell/php.sh

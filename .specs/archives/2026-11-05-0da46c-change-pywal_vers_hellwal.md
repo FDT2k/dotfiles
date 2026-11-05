@@ -1,6 +1,6 @@
 # Remplacer pywal par hellwal dans la chaîne de thème
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
