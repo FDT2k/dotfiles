@@ -1,6 +1,6 @@
 # Ajouter arandr au script d'installation
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
