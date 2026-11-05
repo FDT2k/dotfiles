@@ -1,6 +1,6 @@
 # Nettoyage de ce qui touche aux écrans : presets morts, anciennes machines, luminosité cassée
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation actuelle

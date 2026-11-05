@@ -31,7 +31,7 @@ DUNST_PKGS=(dunst libnotify)
 # (profiles and layouts in ~/.config/terminator/config)
 TERMINATOR_PKGS=(terminator)
 # Screen layouts: arandr entry of the screenlayout.d menu; xrandr for the
-# other entries and bin/monitor_layout/
+# other entries
 SCREENS_PKGS=(arandr xorg-xrandr)
 # Qtile bar fonts: Arimo (ttf-croscore) for the ◢ ◤ arrows, Open Sans for the
 # GroupBox
