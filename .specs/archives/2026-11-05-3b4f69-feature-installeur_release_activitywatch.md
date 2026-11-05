@@ -1,6 +1,6 @@
 # Installeur de release GitHub : ActivityWatch dans le script d'installation
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale

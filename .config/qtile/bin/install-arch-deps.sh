@@ -5,13 +5,14 @@
 # fonts; the group sddm (never installed by default) also configures SDDM.
 #
 #   install-arch-deps.sh                 # every group
-#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst, terminator, screens, fonts
+#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch
 #   install-arch-deps.sh sddm            # SDDM, its config and the fdt2k-dark theme (not in the default groups)
 #
 # Official repositories only (pacman), no AUR: packages already installed are
 # skipped (--needed). Tools that are not packaged are built from git (see
 # git_install): cloned in ~/.local/src/<name>, updated, built with make and
-# copied to ~/bin/<name> on every run.
+# copied to ~/bin/<name> on every run; or installed from the latest GitHub
+# release archive (see release_install) in ~/.local/opt/<name>, linked in ~/bin.
 
 set -e
 
@@ -47,9 +48,16 @@ SDDM_PKGS=(sddm qt6-5compat qt6-svg qt6-virtualkeyboard)
 SDDM_CONF_DIR="${SDDM_CONF_DIR:-/etc/sddm.conf.d}"
 SDDM_THEMES_DIR="${SDDM_THEMES_DIR:-/usr/share/sddm/themes}"
 SDDM_THEME=fdt2k-dark
+# Activity tracker started by autostart.sh: release archive from GitHub
+# (curl, unzip), release information read with python
+ACTIVITYWATCH_PKGS=(curl unzip python)
 
 # Git recipes: name, repository, binary built by make (relative to the repo)
 HELLWAL_GIT=(hellwal https://github.com/FDT2k/hellwal.git hellwal)
+
+# Release recipes: name, GitHub repository, asset name pattern (regex),
+# binary linked in ~/bin
+ACTIVITYWATCH_RELEASE=(activitywatch ActivityWatch/activitywatch 'activitywatch-v[0-9.]+-linux-x86_64\.zip' aw-qt)
 
 # Clone (or update) a repository in ~/.local/src/<name>, build it with make
 # and copy the binary to ~/bin/<name>. Any failure stops the script; the
@@ -81,6 +89,65 @@ git_install() {
 
 # Warn when another hellwal would be found before ~/bin/hellwal by
 # bin/theme/hellwal-apply (PATH first, then ~/.config/qtile/bin)
+# Install the latest GitHub release archive of <repo> in ~/.local/opt/<name>
+# and link <binary> in ~/bin. Skipped when ~/.local/opt/<name>/.version already
+# holds the latest tag. Any failure stops the script; the installed version is
+# only replaced once the new one is complete.
+release_install() {
+    local name="$1" repo="$2" pattern="$3" binary="$4"
+    local dest="$HOME/.local/opt/$name"
+    local api="https://api.github.com/repos/$repo/releases/latest"
+    local json info tag url tmp found target
+
+    fail() {
+        echo "==> $name: $1" >&2
+        exit 1
+    }
+
+    json="$(curl -fsSL "$api")" || fail "release lookup failed: $api"
+    info="$(printf '%s' "$json" | python3 -c '
+import json, re, sys
+data = json.load(sys.stdin)
+for asset in data.get("assets", []):
+    if re.fullmatch(sys.argv[1], asset["name"]):
+        print(data["tag_name"], asset["browser_download_url"])
+        break
+else:
+    print(data.get("tag_name", "?"))
+' "$pattern")" || fail "unreadable release information from $api"
+    tag="${info%% *}"
+    url="${info#* }"
+    [ "$url" != "$info" ] || fail "no asset matching $pattern in $tag"
+
+    if [ "$(cat "$dest/.version" 2>/dev/null)" = "$tag" ]; then
+        echo "==> $name up to date ($tag)"
+    else
+        echo "==> release: $name $tag ($repo) → ~/.local/opt/$name"
+        tmp="$(mktemp -d)"
+        if ! curl -fsSL -o "$tmp/archive.zip" "$url"; then
+            rm -rf "$tmp"; fail "download failed: $url"
+        fi
+        if ! unzip -q "$tmp/archive.zip" -d "$tmp/new"; then
+            rm -rf "$tmp"; fail "unzip failed: $url"
+        fi
+        found="$(find "$tmp/new" -maxdepth 2 -name "$binary" -type f -perm -u+x | head -1)"
+        if [ -z "$found" ]; then
+            rm -rf "$tmp"; fail "binary not found: $binary"
+        fi
+        printf '%s\n' "$tag" > "$tmp/new/.version"
+        mkdir -p "$HOME/.local/opt"
+        [ -e "$dest" ] && mv "$dest" "$dest.old"
+        mv "$tmp/new" "$dest"
+        rm -rf "$dest.old" "$tmp"
+    fi
+
+    target="$(find "$dest" -maxdepth 2 -name "$binary" -type f -perm -u+x | head -1)"
+    [ -n "$target" ] || fail "binary not found: $binary"
+    mkdir -p "$HOME/bin"
+    ln -sfn "$target" "$HOME/bin/$binary"
+    echo "==> $name installed: ~/bin/$binary"
+}
+
 warn_hellwal_shadowed() {
     local fresh shadow
     fresh="$(realpath "$HOME/bin/hellwal")"
@@ -161,11 +228,12 @@ setup_sddm() {
 }
 
 groups=("$@")
-[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst terminator screens fonts)
+[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst terminator screens fonts activitywatch)
 
 pkgs=()
 want_hellwal=no
 want_sddm=no
+want_activitywatch=no
 for g in "${groups[@]}"; do
     case "$g" in
         rofi)  pkgs+=("${ROFI_PKGS[@]}") ;;
@@ -175,8 +243,9 @@ for g in "${groups[@]}"; do
         terminator) pkgs+=("${TERMINATOR_PKGS[@]}") ;;
         screens) pkgs+=("${SCREENS_PKGS[@]}") ;;
         fonts) pkgs+=("${FONTS_PKGS[@]}") ;;
+        activitywatch) pkgs+=("${ACTIVITYWATCH_PKGS[@]}"); want_activitywatch=yes ;;
         sddm)  pkgs+=("${SDDM_PKGS[@]}"); want_sddm=yes ;;
-        *)     echo "unknown group: $g (rofi, theme, lock, dunst, terminator, screens, fonts, sddm)" >&2; exit 2 ;;
+        *)     echo "unknown group: $g (rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sddm)" >&2; exit 2 ;;
     esac
 done
 
@@ -189,6 +258,10 @@ sudo pacman -S --needed "${pkgs[@]}"
 if [ "$want_hellwal" = yes ]; then
     git_install "${HELLWAL_GIT[@]}"
     warn_hellwal_shadowed
+fi
+
+if [ "$want_activitywatch" = yes ]; then
+    release_install "${ACTIVITYWATCH_RELEASE[@]}"
 fi
 
 if [ "$want_sddm" = yes ]; then
