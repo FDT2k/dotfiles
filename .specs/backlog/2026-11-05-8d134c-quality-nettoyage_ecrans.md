@@ -25,15 +25,16 @@ Inventaire de tout ce qui touche aux écrans dans `.config/qtile/`, avec l'état
 | `daoloth.sh` | `DisplayPort-4/5/6/7` | **gardée** (fixe actuel) |
 | `sddm` → `daoloth.sh` (lien) | — | **gardé** : lancé par SDDM avant le login (spec `861406`) |
 | `arandr` | — | **gardé** |
+| `abhoth.sh` | `eDP-1` | **gardé** (laptop actuel, ajouté après la rédaction) |
 | `_daoloth.sh`, `__daoloth.sh`, `sddm.sh` | `HDMI-A-1`, `DVI-I-1`, `HDMI-0` | anciennes versions du fixe, **supprimées** |
 | `home`, `vertical`, `samsung`, `samsung-dual` | `eDP-1`, `HDMI-1` | ancien laptop qui n'existe plus, **supprimées** |
-| `alienware`, `alien-thin`, `alien-sam-pip-right` | `eDP1`, `HDMI-1-3` | ancienne machine qui n'existe plus, **supprimées** |
+| `alienware`, `alien-thin.sh`, `alien-sam-pip-right.sh` | `eDP1`, `HDMI-1-3` | ancienne machine qui n'existe plus, **supprimées** |
 
 ## Motivation
 
 - **Contexte** : les dotfiles portent des réglages d'écrans de machines disparues et des raccourcis morts ou cassés. On s'y perd au moment de préparer une configuration par machine (fixe daoloth, laptop abhoth).
 - **Objectif** : ne garder que ce qui sert sur les machines actuelles.
-- **Bénéfice** : un menu « Monitor Layout » à trois entrées utiles, moins de code mort, et une base propre pour la logique par machine.
+- **Bénéfice** : un menu « Monitor Layout » réduit aux entrées utiles, moins de code mort, et une base propre pour la logique par machine.
 
 ## Changements prévus
 
@@ -41,9 +42,9 @@ Inventaire de tout ce qui touche aux écrans dans `.config/qtile/`, avec l'état
 
 - `.config/qtile/bin/monitor_layout/` en entier (4 scripts).
 - `.config/qtile/bin/brightness.sh`.
-- Dans `.config/qtile/bin/screenlayout.d/` : `_daoloth.sh`, `__daoloth.sh`, `sddm.sh`, `home`, `vertical`, `samsung`, `samsung-dual`, `alienware`, `alien-thin`, `alien-sam-pip-right`.
+- Dans `.config/qtile/bin/screenlayout.d/` : `_daoloth.sh`, `__daoloth.sh`, `sddm.sh`, `home`, `vertical`, `samsung`, `samsung-dual`, `alienware`, `alien-thin.sh`, `alien-sam-pip-right.sh`.
 
-Restent dans `screenlayout.d/` : `daoloth.sh`, `sddm` (lien), `arandr`.
+Restent dans `screenlayout.d/` : `daoloth.sh`, `abhoth.sh` (disposition du laptop, ajoutée par l'humain), `sddm` (lien), `arandr`.
 
 ### `qtile_config/keybindings.py`
 
@@ -77,7 +78,7 @@ Supprimer les 7 entrées `home_screen_layout`, `work_screen_layout`, `samsung_sc
 
 ## Contraintes à respecter
 
-- Ne pas toucher à `daoloth.sh`, au lien `sddm` ni à `arandr`.
+- Ne pas toucher à `daoloth.sh`, `abhoth.sh`, au lien `sddm` ni à `arandr`.
 - Ne pas modifier `bin/run.sh` ni le raccourci `mod+alt+l`.
 - Ne pas libérer d'autre raccourci que `mod+q` et `mod+alt+1/2/3`.
 - Pas de logique par machine dans cette spec (à venir).
@@ -90,7 +91,7 @@ Le dépôt n'a pas de suite de tests (`## Tests` du `CLAUDE.md`). Les cas se jou
 | Cas | Attendu |
 |-----|---------|
 | `python3 -m py_compile .config/qtile/qtile_config/*.py` | aucune erreur |
-| `ls .config/qtile/bin/screenlayout.d/` | exactement `arandr`, `daoloth.sh`, `sddm` (lien vers `daoloth.sh`) |
+| `ls .config/qtile/bin/screenlayout.d/` | exactement `abhoth.sh`, `arandr`, `daoloth.sh`, `sddm` (lien vers `daoloth.sh`) |
 | `ls .config/qtile/bin/monitor_layout .config/qtile/bin/brightness.sh` | absents |
 | `grep -rn "monitor_layout\|brightness\|toggle_screen_focus\|move_cursor\|curr_screen\|_screen_layout\b" .config/qtile/qtile_config` | aucun résultat, hormis `screen_layout` (menu) |
 | `keybindings.py` chargé avec la fausse `libqtile` | plus de `Key` `[mod] q` ni `[mod, alt] 1/2/3` ; même nombre de `Key` qu'avant moins 4 ; `mod+alt+l` et `mod+shift+f` toujours présents |
