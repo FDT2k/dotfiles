@@ -5,7 +5,7 @@
 # fonts; the group sddm (never installed by default) also configures SDDM.
 #
 #   install-arch-deps.sh                 # every group
-#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sound
+#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sound, bluetooth
 #   install-arch-deps.sh sddm            # SDDM, its config and the fdt2k-dark theme (not in the default groups)
 #
 # Official repositories only (pacman), no AUR: packages already installed are
@@ -57,6 +57,10 @@ ACTIVITYWATCH_PKGS=(curl unzip python)
 SOUND_PKGS=(pipewire pipewire-pulse wireplumber pamixer pavucontrol alsa-utils)
 # User services of the sound group, enabled and started by the script
 SOUND_UNITS=(pipewire.socket pipewire-pulse.socket wireplumber.service)
+# Bluetooth: bluez daemon, bluetoothctl (widgets/bluetooth_widget.py, mod+b),
+# blueman (scratchpad dropdown, mod+ctrl+5); system service enabled by the
+# script (skipped by systemd on machines without an adapter)
+BLUETOOTH_PKGS=(bluez bluez-utils blueman)
 
 # Git recipes: name, repository, binary built by make (relative to the repo)
 HELLWAL_GIT=(hellwal https://github.com/FDT2k/hellwal.git hellwal)
@@ -234,13 +238,14 @@ setup_sddm() {
 }
 
 groups=("$@")
-[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst terminator screens fonts activitywatch sound)
+[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst terminator screens fonts activitywatch sound bluetooth)
 
 pkgs=()
 want_hellwal=no
 want_sddm=no
 want_activitywatch=no
 want_sound=no
+want_bluetooth=no
 for g in "${groups[@]}"; do
     case "$g" in
         rofi)  pkgs+=("${ROFI_PKGS[@]}") ;;
@@ -252,8 +257,9 @@ for g in "${groups[@]}"; do
         fonts) pkgs+=("${FONTS_PKGS[@]}") ;;
         activitywatch) pkgs+=("${ACTIVITYWATCH_PKGS[@]}"); want_activitywatch=yes ;;
         sound) pkgs+=("${SOUND_PKGS[@]}"); want_sound=yes ;;
+        bluetooth) pkgs+=("${BLUETOOTH_PKGS[@]}"); want_bluetooth=yes ;;
         sddm)  pkgs+=("${SDDM_PKGS[@]}"); want_sddm=yes ;;
-        *)     echo "unknown group: $g (rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sound, sddm)" >&2; exit 2 ;;
+        *)     echo "unknown group: $g (rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sound, bluetooth, sddm)" >&2; exit 2 ;;
     esac
 done
 
@@ -276,6 +282,11 @@ if [ "$want_sound" = yes ]; then
     # pamixer gets "Connection error" while pipewire-pulse is not running
     echo "==> sound: enabling user services ${SOUND_UNITS[*]}"
     systemctl --user enable --now "${SOUND_UNITS[@]}"
+fi
+
+if [ "$want_bluetooth" = yes ]; then
+    echo "==> bluetooth: enabling bluetooth.service"
+    sudo systemctl enable --now bluetooth.service
 fi
 
 if [ "$want_sddm" = yes ]; then
