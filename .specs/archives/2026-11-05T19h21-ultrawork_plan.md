@@ -35,7 +35,7 @@ Aucune.
 **Chantier** : divers
 **Objectif** : supprimer les scripts xrandr des machines disparues, `bin/monitor_layout/`, `brightness.sh`, les fonctions et raccourcis morts (`mod+q`, `mod+alt+1/2/3`) pour ne garder que `daoloth.sh`, `sddm` et `arandr` dans le menu.
 **Dépendances** : aucune (cite `861406` seulement pour justifier la conservation du lien `sddm`)
-**Fichier** : `.specs/backlog/2026-11-05-8d134c-quality-nettoyage_ecrans.md`
+**Fichier** : `.specs/archives/2026-11-05-8d134c-quality-nettoyage_ecrans.md`
 
 #### 2. `861406` — Groupe sddm du script d'installation
 
@@ -44,7 +44,7 @@ Aucune.
 **Chantier** : divers
 **Objectif** : ajouter à `install-arch-deps.sh` un groupe `sddm` (hors défaut) qui installe SDDM, écrit `/etc/sddm.conf.d/10-dotfiles.conf` (`DisplayCommand` → `screenlayout.d/sddm`, thème `fdt2k-dark`), pose le lien du thème et avertit si l'utilisateur `sddm` ne peut pas lire le home.
 **Dépendances** : aucune (le nettoyage de `screenlayout.d/` est déclaré hors périmètre)
-**Fichier** : `.specs/backlog/2026-11-05-861406-feature-install_sddm.md`
+**Fichier** : `.specs/archives/2026-11-05-861406-feature-install_sddm.md`
 
 #### 3. `9cf61c` — Dispositions d'écran par machine
 
@@ -53,7 +53,7 @@ Aucune.
 **Chantier** : divers
 **Objectif** : nouveau script `bin/screenlayout` (menu rofi limité à la machine courante via `uname -n`, et `--default`), lien `screenlayout.d/sddm` remplacé par un script qui lance `screenlayout --default`, disposition par défaut appliquée aussi par `autostart.sh`.
 **Dépendances** : `8d134c` et `861406` — déclarées explicitement (« s'implémente après … ; part de l'état qu'elles laissent »)
-**Fichier** : `.specs/backlog/2026-11-05-9cf61c-feature-dispositions_ecran_par_machine.md`
+**Fichier** : `.specs/archives/2026-11-05-9cf61c-feature-dispositions_ecran_par_machine.md`
 
 ---
 
