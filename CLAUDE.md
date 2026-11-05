@@ -51,6 +51,7 @@ Documentation détaillée dans `.config/qtile/CLAUDE.md`. Points structurants :
 
 ### Divers
 - `.config/rofi/` : launcher et powermenu (styles `type-1`).
+- `.config/terminator/config` : profils, layouts et raccourcis de Terminator. `bin/floatterm` dépend du profil `hold` et du layout `floating` qui y sont définis.
 - `.local/fabien/` : copie autonome de certains outils (i3lock-multimonitor, `rofi-run` lisant `rofi-items/*.d`) qui duplique en partie `.config/qtile/bin/`.
 - `.config/Code/User/` : raccourcis et tâches VS Code (s'appuient sur `~/bin/qlaunch`, `~/bin/freya`, `vendor/bin/pint`).
 
