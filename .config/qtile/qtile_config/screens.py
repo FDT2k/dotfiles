@@ -24,7 +24,7 @@ screens = [
                 widget.Spacer(10),
                 widget.CurrentLayout(),
                 widget.TextBox(
-                    font="Arial",
+                    font="Arimo",
                     foreground=theme_neg.bg,
                     text="◢",
                     fontsize=(FONT_SIZE*5.25),
@@ -46,7 +46,7 @@ screens = [
                     visible_groups=get_workspace_groups(wsp['current']),
                 ),
                 widget.TextBox(
-                    font="Arial",
+                    font="Arimo",
                     foreground=theme_neg.bg,
                     text="◤ ",
                     fontsize=(FONT_SIZE*5.25),
@@ -55,7 +55,7 @@ screens = [
                 widget.Prompt(),
                 widget.WindowName(padding=0),
                 widget.TextBox(
-                    font="Arial",
+                    font="Arimo",
                     foreground=theme_neg.bg,
                     text="◢",
                     fontsize=(FONT_SIZE*5.25),
@@ -86,7 +86,7 @@ screens = [
                     line_width=1
                 ),
                 widget.TextBox(
-                    font="Arial",
+                    font="Arimo",
                     foreground=theme_neg.bg,
                     text="◤ ",
                     fontsize=(FONT_SIZE*5.25),

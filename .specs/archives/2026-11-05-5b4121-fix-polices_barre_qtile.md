@@ -1,6 +1,6 @@
 # Triangles de la barre décollés sur le laptop : police Arial résolue différemment
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
