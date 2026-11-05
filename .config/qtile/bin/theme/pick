@@ -24,6 +24,7 @@ rm  ~/.cache/wal/.theme-$STR.jpg
 ln -s  $FOLDER/$choice ~/.cache/wal/.theme-$STR.jpg
 
 wal -i $FOLDER/$choice
+hellwal -i $FOLDER/$choice -t test
 
 qtile cmd-obj -o cmd -f restart
 
