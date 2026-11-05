@@ -44,7 +44,7 @@ Note : `qtile_config/themes.py` lit `~/.cache/wal/colors.json` à l'import. S'il
 
 ### Qtile (`.config/qtile/`)
 Documentation détaillée dans `.config/qtile/CLAUDE.md`. Points structurants :
-- `config.py` se réduit à `from qtile_config import *` ; la config réelle est le package `qtile_config/` (themes/commands → workspaces/layouts/hooks → keybindings/screens → `__init__`).
+- `config.py` est un lien symbolique vers `fdt2k.config.py`, qui se réduit à `from qtile_config import *` ; la config réelle est le package `qtile_config/` (themes/commands → workspaces/layouts/hooks → keybindings/screens → `__init__`).
 - `qtile_config/commands.py` centralise les chemins des scripts, tous résolus relativement au package (`../bin/...`). Ajouter un raccourci vers un script = l'enregistrer dans `commands.py` puis le binder dans `keybindings.py`.
 - **Dispositions d'écran par machine** : `bin/screenlayout.d/{hostname}.sh` (défaut, `uname -n`) et `{hostname}_{nom}.sh` (variantes), choisies par `bin/screenlayout` (menu rofi, `mod+alt+l`) ; la disposition par défaut est appliquée par SDDM avant le login et par `autostart.sh`.
 - **Menus `.d`** : `bin/run.sh <dossier>.d "<Prompt>"` liste les fichiers du dossier dans rofi et exécute celui choisi (avec `bin/` dans le `PATH`). Ajouter une entrée de menu = déposer un script dans le dossier `.d` concerné, sans toucher au Python.

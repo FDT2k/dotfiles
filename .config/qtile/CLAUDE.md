@@ -8,7 +8,7 @@ Linux desktop environment configuration system centered around **Qtile window ma
 
 ## Setup
 
-This directory is part of the dotfiles repo (bare repo with `$HOME` as work tree, see the root `CLAUDE.md`): files are already in place at `~/.config/qtile/`, no symlink or generation step. `config.py` is versioned and only contains `from qtile_config import *`.
+This directory is part of the dotfiles repo (bare repo with `$HOME` as work tree, see the root `CLAUDE.md`): files are already in place at `~/.config/qtile/`, no symlink or generation step. `config.py` is a versioned symlink to `fdt2k.config.py`, which only contains `from qtile_config import *`.
 
 ```bash
 # Verify syntax
@@ -90,8 +90,8 @@ Screen layouts are per machine, in `bin/screenlayout.d/`, named after `uname -n`
 | File | Purpose |
 |------|---------|
 | `qtile_config/` | Modular Qtile configuration package (see Architecture) |
-| `config.py` | Qtile entry point, one line: `from qtile_config import *` |
-| `fdt2k.config.py` | Identical one-line copy of `config.py` (not a legacy monolithic config) |
+| `config.py` | Qtile entry point: symlink to `fdt2k.config.py` |
+| `fdt2k.config.py` | Target of `config.py`, one line: `from qtile_config import *` (was the monolithic config before the `qtile_config/` package) |
 | `autostart.sh` | Desktop initialization and daemon startup (called by the `startup` hook) |
 | `bin/run.sh` | Rofi-based application/menu launcher |
 | `bin/lock` | Screen locking (uses i3lock-multimonitor) |
