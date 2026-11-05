@@ -110,7 +110,7 @@ Sans objet.
 | `.config/qtile/bin/screenlayout.d/sddm` | lien symbolique → script exécutable qui lance `../screenlayout --default` |
 | `.config/qtile/qtile_config/commands.py` | `screen_layout` → `../bin/screenlayout` |
 | `.config/qtile/autostart.sh` | `$DIR/bin/screenlayout --default` en premier, synchrone |
-| `.config/qtile/bin/screenlayout.d/daoloth.sh` | commentaire en tête : disposition par défaut de daoloth (convention `{hostname}.sh`), lancée par SDDM et autostart |
+| `.config/qtile/bin/screenlayout.d/daoloth.sh` | commentaire en tête **remplaçant** celui posé par `861406` (pas un second) : disposition par défaut de daoloth (convention `{hostname}.sh`), lancée par SDDM et autostart ; même commentaire adapté en tête de `abhoth.sh` |
 | `.config/qtile/CLAUDE.md` | section « Monitor Configuration » : convention de nommage, script `screenlayout`, SDDM et autostart |
 | `CLAUDE.md` | une ligne dans la partie Qtile : dispositions d'écran par hostname dans `bin/screenlayout.d/` |
 
