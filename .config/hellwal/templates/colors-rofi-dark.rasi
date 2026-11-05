@@ -75,6 +75,11 @@
     padding: 1px;
 }
 
+#element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}
+
 #element.normal.normal {
     background-color: @normal-background;
     text-color: @normal-foreground;
@@ -123,7 +128,6 @@
 #scrollbar {
     width: 4px;
     border: 0;
-    handle-color: @normal-foreground;
     handle-width: 8px;
     padding: 0;
 }
