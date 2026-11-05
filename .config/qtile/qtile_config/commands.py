@@ -10,7 +10,6 @@ shft = "shift"
 
 
 class command:
-    autostart = os.path.join(os.path.dirname(__file__), '../bin/autostart')
     lock = os.path.join(os.path.dirname(__file__), '../bin/lock')
     suspend = os.path.join(os.path.dirname(__file__), '../bin/suspend')
     hibernate = os.path.join(os.path.dirname(__file__), '../bin/hibernate')
