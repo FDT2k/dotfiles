@@ -1,6 +1,6 @@
 # Groupe sddm du script d'installation : disposition d'écrans et thème fdt2k-dark
 
-Status: draft
+Status: implemented
 Chantier: divers
 
 ## Situation initiale
