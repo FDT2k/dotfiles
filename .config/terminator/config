@@ -1,5 +1,4 @@
 [global_config]
-  geometry_hinting = True
   enabled_plugins = InactivityWatch, LaunchpadBugURLHandler, LaunchpadCodeURLHandler, APTURLHandler
   ask_before_closing = never
   invert_search = True
