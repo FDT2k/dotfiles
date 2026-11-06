@@ -1,11 +1,11 @@
 #!/bin/bash
 # Install the Arch packages for rofi, the theme/wallpaper chain (hellwal),
 # the screen lock (i3lock-multimonitor), notifications (dunst), the
-# terminal (terminator), the screen layouts (arandr, xrandr) and the Qtile bar
-# fonts; the group sddm (never installed by default) also configures SDDM.
+# terminal (terminator), the screen layouts (arandr, xrandr), the Qtile bar
+# fonts and xpra (Forest, see ~/.shell/forest.sh); the group sddm (never installed by default) also configures SDDM.
 #
 #   install-arch-deps.sh                 # every group
-#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sound, bluetooth
+#   install-arch-deps.sh rofi lock       # only the named groups: rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sound, bluetooth, xpra
 #   install-arch-deps.sh sddm            # SDDM, its config and the fdt2k-dark theme (not in the default groups)
 #
 # Official repositories only (pacman), no AUR: packages already installed are
@@ -61,6 +61,11 @@ SOUND_UNITS=(pipewire.socket pipewire-pulse.socket wireplumber.service)
 # blueman (scratchpad dropdown, mod+ctrl+5); system service enabled by the
 # script (skipped by systemd on machines without an adapter)
 BLUETOOTH_PKGS=(bluez bluez-utils blueman)
+# Forest in an xpra session (~/.shell/forest.sh): xpra on every machine,
+# plus the virtual X server on daoloth, which hosts the session
+XPRA_PKGS=(xpra)
+XPRA_HOST=daoloth
+XPRA_HOST_PKGS=(xorg-server-xvfb)
 
 # Git recipes: name, repository, binary built by make (relative to the repo)
 HELLWAL_GIT=(hellwal https://github.com/FDT2k/hellwal.git hellwal)
@@ -238,7 +243,7 @@ setup_sddm() {
 }
 
 groups=("$@")
-[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst terminator screens fonts activitywatch sound bluetooth)
+[ ${#groups[@]} -eq 0 ] && groups=(rofi theme lock dunst terminator screens fonts activitywatch sound bluetooth xpra)
 
 pkgs=()
 want_hellwal=no
@@ -258,8 +263,10 @@ for g in "${groups[@]}"; do
         activitywatch) pkgs+=("${ACTIVITYWATCH_PKGS[@]}"); want_activitywatch=yes ;;
         sound) pkgs+=("${SOUND_PKGS[@]}"); want_sound=yes ;;
         bluetooth) pkgs+=("${BLUETOOTH_PKGS[@]}"); want_bluetooth=yes ;;
+        xpra)  pkgs+=("${XPRA_PKGS[@]}")
+               [ "$(uname -n)" = "$XPRA_HOST" ] && pkgs+=("${XPRA_HOST_PKGS[@]}") ;;
         sddm)  pkgs+=("${SDDM_PKGS[@]}"); want_sddm=yes ;;
-        *)     echo "unknown group: $g (rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sound, bluetooth, sddm)" >&2; exit 2 ;;
+        *)     echo "unknown group: $g (rofi, theme, lock, dunst, terminator, screens, fonts, activitywatch, sound, bluetooth, xpra, sddm)" >&2; exit 2 ;;
     esac
 done
 

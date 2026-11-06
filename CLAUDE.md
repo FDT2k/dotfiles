@@ -40,6 +40,7 @@ Note : `qtile_config/themes.py` lit `~/.cache/wal/colors.json` à l'import. S'il
 - `.zshrc` : oh-my-zsh avec le thème maison `fdt2k` (source : `.config/fdt2k.zsh-theme`), nvm, fzf, recoloration du terminal (`sh ~/.cache/wal/terminal.sh`), puis source les modules de `.shell/`.
 - `.shell/php.sh` : wrappers PHP/Composer via Docker (`registry.gitlab.com/karsegard/docker-infomaniak:<version>-<debian>`), générés par `_docker_php_run version cmd composer_file`. Familles de fonctions `c2_<ver>[_dev|_prod|_agent|_all]` sélectionnant `composer.json` / `composer.dev.json` / `composer.prod.json` / `composer.agents.json`. Le workspace monté en lecture seule est `$PHP_WORKSPACE` ou `$KDA_WORK`. Les anciens alias `php-8.x` / `composer2-php8.x-*` de `.zshrc` sont l'ancienne génération de ce mécanisme.
 - `.shell/ai-core.sh` : variables d'environnement des agents (`AICORE_*`, `AGENT_MCP_RULES_PATH`).
+- `.shell/forest.sh` : `forest-up`, `forest-on`, `forest-off`, `forest-stop` pilotent Forest dans la session xpra `:101` de daoloth — en local sur daoloth, par SSH ailleurs. Paquets : groupe `xpra` de `install-arch-deps.sh`.
 - `bin/rocket` : wrapper façon Laravel Sail autour de `docker compose` (fichiers `ROCKET_FILES` séparés par `:`, défaut `rocket.yml` ; env depuis `.env.$APP_ENV`, `.env.rocket` ou `.env`).
 
 ### Qtile (`.config/qtile/`)
