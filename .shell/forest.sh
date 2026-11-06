@@ -27,7 +27,7 @@ _forest_xpra() {
 }
 
 # Crée la session et y lance Forest : une fois, après un redémarrage de daoloth.
-forest-up() {
+forest-start() {
   _forest_xpra start --attach=no || return
   local run="DISPLAY=:$FOREST_DISPLAY setsid -f $FOREST_BIN >/tmp/forest-xpra.log 2>&1"
   if _forest_local; then
@@ -38,7 +38,7 @@ forest-up() {
 }
 
 # Affiche Forest sur la machine courante, sans bloquer le shell.
-forest-on() {
+forest-attach() {
   if _forest_local; then
     setsid -f xpra attach ":$FOREST_DISPLAY" >/dev/null 2>&1
   else
@@ -47,7 +47,7 @@ forest-on() {
 }
 
 # Détache : Forest continue de tourner sur daoloth.
-forest-off() { _forest_xpra detach; }
+forest-detach() { _forest_xpra detach; }
 
 # Arrête la session et Forest.
 forest-stop() { _forest_xpra stop; }
