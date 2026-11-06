@@ -1,13 +1,21 @@
 #!/usr/bin/env python3
-"""qlaunch — spawn in a specific qtile group without stealing focus"""
+"""qlaunch — spawn in a specific qtile group without stealing focus.
+
+Without a qtile on $DISPLAY (an xpra session, for example), the command is
+started directly, without group placement."""
 import argparse
 import json
+import os
 from libqtile.command.client import InteractiveCommandClient
 parser = argparse.ArgumentParser()
 parser.add_argument("-g", "--group")
 args, remaining = parser.parse_known_args()
 
-c = InteractiveCommandClient()
+try:
+    c = InteractiveCommandClient()
+    c.status()
+except Exception:
+    os.execvp("sh", ["sh", "-c", " ".join(remaining)])
 
 if args.group:
     with open("/tmp/qtile_spawn_target", "w") as f:
